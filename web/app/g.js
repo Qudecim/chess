@@ -1,9 +1,10 @@
 import {Piece} from "./piece";
 
 export default {
-    block: 20,
+    block: 50,
     canvas: null,
     ctx: null,
+    active: null,
     board: [
         [null,null,null,null,null,null,null,null],
         [null,null,null,null,null,null,null,null],
@@ -32,7 +33,6 @@ export default {
         for (let v = 0; v < 8; v++) {
             for (let h = 0; h < 8; h++) {
                 if (this.start_positions[v][h] !== null) {
-                    console.log(this.start_positions[v][h][0]);
                     this.board[v][h] = new Piece(this.start_positions[v][h][0], h, v, this.start_positions[v][h][1])
                 }
             }
@@ -41,9 +41,13 @@ export default {
     draw:function () {
         this.draw_board()
         this.draw_chessmen()
+        this.draw_tips()
     },
     draw_board: function () {
-        this.ctx.fillStyle = 'rgb(200, 0, 0)';
+        this.ctx.fillStyle = 'rgb(255, 255, 255)';
+        this.ctx.fillRect(0, 0, this.block * 8, this.block * 8);
+
+        this.ctx.fillStyle = 'rgb(0, 0, 0)';
 
         let sum = 0;
         for(let v = 0; v < 8; v++) {
@@ -66,6 +70,40 @@ export default {
 
             }
         }
+    },
+    draw_tips: function () {
+        if (this.active !== null) {
+            this.board[this.active.v][this.active.h].draw_tips()
+        }
+    },
+    set_active: function (h,v) {
+
+        if (this.active === null) {
+            this.board[v][h].set_active()
+            this.active = {v, h}
+        } else {
+            let go = false
+            console.log(this.active.v,this.active.h)
+            if (this.board[this.active.v][this.active.h] !== null) {
+                let steps = this.board[this.active.v][this.active.h].get_steps()
+
+                for (let step of steps) {
+                    if (step.h === h && step.v === v) {
+                        this.board[this.active.v][this.active.h].go(h, v)
+                        this.active = {v, h}
+                        go = true
+                    }
+
+                }
+            }
+
+            if (!go) {
+                this.board[this.active.v][this.active.h].set_disactive()
+                this.active = null
+            }
+
+        }
+
     },
     tic: function () {
         this.draw()
