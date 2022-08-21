@@ -5,6 +5,8 @@ import { Queen } from './chessmen/queen'
 import { Bishop } from './chessmen/bishop'
 import { Rook } from './chessmen/rook'
 import g from './g'
+import res from "./res";
+import control from "./control";
 
 export class Piece {
     color = 0
@@ -43,11 +45,18 @@ export class Piece {
 
     draw() {
         let data = this.piece.draw();
-        g.ctx.fillStyle = 'rgb(88,255,0)';
         if (this.active) {
-            g.ctx.fillStyle = 'rgb(255,255,0)';
+
+            g.ctx.fillStyle = '#9cce9d';
+            g.ctx.fillRect(this.h * g.block, this.v * g.block, g.block, g.block);
+
+
+            g.ctx.drawImage(res.sprites.chessmen, 213 * data.sprite, 213 * this.color, 213, 213, g.cursor.x + g.cursor.ox, g.cursor.y + g.cursor.oy, g.block, g.block);
+        } else {
+            g.ctx.drawImage(res.sprites.chessmen, 213 * data.sprite, 213 * this.color, 213, 213, this.h * g.block, this.v * g.block, g.block, g.block);
         }
-        g.ctx.fillRect(this.h * g.block, this.v * g.block, g.block, g.block);
+
+
     }
 
     set_active() {
@@ -65,8 +74,10 @@ export class Piece {
     draw_tips() {
         let steps = this.get_steps(this.color, this.h, this.v)
         for (let i = 0; i < steps.length; i++) {
-            g.ctx.fillStyle = 'rgb(0,255,255)';
+            g.ctx.fillStyle = '#9cc0ce';
+            g.ctx.globalAlpha = 0.7;
             g.ctx.fillRect(steps[i].h * g.block, steps[i].v * g.block, g.block, g.block);
+            g.ctx.globalAlpha = 1;
         }
     }
 

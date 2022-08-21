@@ -1,10 +1,17 @@
 import {Piece} from "./piece";
+import res from "./res";
 
 export default {
     block: 50,
     canvas: null,
     ctx: null,
     active: null,
+    cursor: {
+        x: 0,
+        y: 0,
+        ox: 0,
+        oy: 0
+    },
     board: [
         [null,null,null,null,null,null,null,null],
         [null,null,null,null,null,null,null,null],
@@ -27,6 +34,7 @@ export default {
         [['rook', 0],['knight', 0],['bishop', 0],['queen', 0],['king', 0],['bishop', 0],['knight', 0],['rook', 0]],
     ],
     start: function () {
+        res.start()
         this.canvas = document.getElementById('board');
         this.ctx = this.canvas.getContext('2d');
 
@@ -40,21 +48,25 @@ export default {
     },
     draw:function () {
         this.draw_board()
-        this.draw_chessmen()
         this.draw_tips()
+        this.draw_chessmen()
+
     },
     draw_board: function () {
         this.ctx.fillStyle = 'rgb(255, 255, 255)';
         this.ctx.fillRect(0, 0, this.block * 8, this.block * 8);
 
-        this.ctx.fillStyle = 'rgb(0, 0, 0)';
+
 
         let sum = 0;
         for(let v = 0; v < 8; v++) {
             for (let h = 0; h < 8; h++) {
                 if (sum % 2 === -0) {
-                    this.ctx.fillRect(h * this.block, v * this.block, this.block, this.block);
+                    this.ctx.fillStyle = '#ceb29c';
+                } else {
+                    this.ctx.fillStyle = '#f5e6cf';
                 }
+                this.ctx.fillRect(h * this.block, v * this.block, this.block, this.block);
                 sum++;
             }
             sum++;
@@ -76,14 +88,15 @@ export default {
             this.board[this.active.v][this.active.h].draw_tips()
         }
     },
-    set_active: function (h,v) {
-
-        if (this.active === null) {
+    down: function (h,v) {
+        if (this.board[v][h] !== null) {
             this.board[v][h].set_active()
             this.active = {v, h}
-        } else {
-            let go = false
-            console.log(this.active.v,this.active.h)
+        }
+    },
+    up: function (h,v) {
+        let go = false
+        if (this.active) {
             if (this.board[this.active.v][this.active.h] !== null) {
                 let steps = this.board[this.active.v][this.active.h].get_steps()
 
@@ -96,14 +109,9 @@ export default {
 
                 }
             }
-
-            if (!go) {
-                this.board[this.active.v][this.active.h].set_disactive()
-                this.active = null
-            }
-
+            this.board[this.active.v][this.active.h].set_disactive()
+            this.active = null
         }
-
     },
     tic: function () {
         this.draw()
