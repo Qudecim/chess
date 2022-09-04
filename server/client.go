@@ -9,6 +9,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"encoding/json"
+	//"fmt"
 
 	"github.com/gorilla/websocket"
 )
@@ -48,6 +50,10 @@ type Client struct {
 	send chan []byte
 }
 
+type Response struct {
+    Action string
+}
+
 // readPump pumps messages from the websocket connection to the hub.
 //
 // The application runs readPump in a per-connection goroutine. The application
@@ -70,7 +76,13 @@ func (c *Client) readPump() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-		c.hub.broadcast <- message
+		//c.hub.broadcast <- message
+
+		var response Response
+		err = json.Unmarshal(message, &response)
+		//c.hub.broadcast <- []byte(response.Action)
+
+		getAction(c, response.Action, message)
 	}
 }
 
@@ -138,5 +150,5 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	// Allow collection of memory referenced by the caller by doing all work in
 	// new goroutines.
 	go client.writePump()
-	//go client.readPump()
+	go client.readPump()
 }

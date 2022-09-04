@@ -30,7 +30,7 @@ window.onload = function () {
 
     if (window["WebSocket"]) {
         //conn = new WebSocket("ws://" + document.location.host + "/ws");
-        conn = new WebSocket("ws://hello.loc/ws");
+        conn = new WebSocket("ws://localhost/ws");
         conn.onclose = function (evt) {
             var item = document.createElement("div");
             item.innerHTML = "<b>Connection closed.</b>";
