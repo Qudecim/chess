@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"fmt"
-	"github.com/Qudecim/chess/internal/app"
 )
 
 var addr = flag.String("addr", ":80", "port")
