@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\server",
+    "\\server\\cmd",
+    "\\server\\cmd\\app",
+    "\\server\\internal",
+    "\\server\\internal\\app"
   ],
+  "SelectedNode": "\\server\\go.mod",
   "PreviewInSolutionExplorer": false
 }
