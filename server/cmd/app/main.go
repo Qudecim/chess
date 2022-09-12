@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Qudecim/chess/internal/app"
+	"github.com/qudecim/chess/server/internal/app"
 )
 
 
