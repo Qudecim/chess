@@ -1,4 +1,4 @@
-module qudecim/chess
+module github.com/qudecim/chess
 
 go 1.18
 
