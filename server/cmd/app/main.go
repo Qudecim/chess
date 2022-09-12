@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/qudecim/chess/server/internal/app"
+	"github.com/qudecim/chess/internal/app"
 )
 
 func main() {
 
-	app.run()
+	app.Run()
 
 }
