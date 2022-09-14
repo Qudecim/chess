@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\cmd",
+    "\\cmd\\app",
+    "\\internal",
+    "\\internal\\app",
+    "\\internal\\controller",
+    "\\internal\\controller\\ws"
+  ],
+  "SelectedNode": "\\client.go",
+  "PreviewInSolutionExplorer": false
+}

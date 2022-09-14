@@ -10,6 +10,11 @@ import (
 
 var addr = flag.String("addr", ":80", "http service address")
 
+var upgrader = websocket.Upgrader{
+    ReadBufferSize:  1024,
+    WriteBufferSize: 1024,
+}
+
 func Init() {
 
 	fmt.Println("Init ws")
@@ -22,13 +27,6 @@ func Init() {
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
-
-    upgrader.CheckOrigin = func(r *http.Request) bool { return true }
-}
-
-var upgrader = websocket.Upgrader{
-    ReadBufferSize:  1024,
-    WriteBufferSize: 1024,
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -41,5 +39,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    fmt.Println(fmt.Sprintf("%#v", conn))
+    client := &Client{conn:conn}
+    
+    defer client.close()
+    go client.write()
+    client.read()
+
 }
