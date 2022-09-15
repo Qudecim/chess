@@ -26,6 +26,7 @@ func Init() {
 		handler(hub, w, r)
 	})
 
+    // Запускаем http сервер
     err := http.ListenAndServe(*addr, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
