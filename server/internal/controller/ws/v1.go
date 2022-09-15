@@ -35,6 +35,7 @@ func Init() {
 
 func handler(hub *Hub, w http.ResponseWriter, r *http.Request) {
 
+
     // разрешаем подключение со сторонних доменов
     upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
