@@ -1,15 +1,15 @@
-package v1
+﻿package v1
 
 import (
     "log"
     "flag"
-    "fmt"
     "net/http"
     "github.com/gorilla/websocket"
 )
 
 var addr = flag.String("addr", ":80", "http service address")
 
+// Размер буфера для записи и чтения
 var upgrader = websocket.Upgrader{
     ReadBufferSize:  1024,
     WriteBufferSize: 1024,
@@ -17,10 +17,13 @@ var upgrader = websocket.Upgrader{
 
 func Init() {
 
-	fmt.Println("Init ws")
+    // hub основная структура состояния, и может общаться между горутинами
+    hub := newHub()
+    go hub.run()
 
+    // отлавливаем через http, что мы хотим общаться сокетами
     http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		handler(w, r)
+		handler(hub, w, r)
 	})
 
     err := http.ListenAndServe(*addr, nil)
@@ -29,20 +32,29 @@ func Init() {
 	}
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func handler(hub *Hub, w http.ResponseWriter, r *http.Request) {
 
+    // разрешаем подключение со сторонних доменов
     upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
+    // апгрейдим http соединение на TCP
     conn, err := upgrader.Upgrade(w, r, nil)
     if err != nil {
         log.Println(err)
         return
     }
 
-    client := &Client{conn:conn}
+    // поднимаем нового клиента
+    // записываем туда соединение,  хаб, и буфер сообщений для клиента
+    client := &Client{conn:conn, hub:hub, send: make(chan []byte, 256)}
+
+    // в хаб ложим инфу о новом пользователе
+    client.hub.register <- client
     
-    defer client.close()
+    // проход буфера сообщений, и отправка
     go client.write()
-    client.read()
+
+    // чтение сообщений от юзера
+    go client.read()
 
 }

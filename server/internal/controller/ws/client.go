@@ -1,9 +1,8 @@
-package v1
+﻿package v1
 
 import (
 	"time"
 	"bytes"
-	"fmt"
 	"log"
 	"github.com/gorilla/websocket"
 )
@@ -31,41 +30,80 @@ type Client struct {
 
 	conn *websocket.Conn
 
-}
+	hub *Hub
 
-func (c *Client) close() {
-	c.conn.Close()
+	send chan []byte
 }
 
 
 func (c *Client) write() {
 
-	for {
-		time.Sleep(5000)
-		c.conn.SetWriteDeadline(time.Now().Add(writeWait))
-		w, err := c.conn.NextWriter(websocket.TextMessage)
-		if err != nil {
-			return
-		}
-		w.Write([]byte("test"))
+	// Ставим таймер для пинга
+	ticker := time.NewTicker(pingPeriod)
 
-		n := len([]byte("test"))
-		for i := 0; i < n; i++ {
-			w.Write(newline)
-			w.Write([]byte("test"))
-		}
-		if err := w.Close(); err != nil {
-			return
+	// При завершении функции, убиваем таймер и клиента
+	defer func() {
+		ticker.Stop()
+		c.conn.Close()
+	}()
+
+	for {
+		select {
+		case message, ok := <-c.send:
+
+			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
+			if !ok {
+				c.conn.WriteMessage(websocket.CloseMessage, []byte{})
+				return
+			}
+
+			// Создаем новое сообщение
+			w, err := c.conn.NextWriter(websocket.TextMessage)
+			if err != nil {
+				return
+			}
+
+			// пишем сообщение
+			w.Write(message)
+
+			// Добавляем еще сообщения из очереди, если есть
+			n := len(c.send)
+			for i := 0; i < n; i++ {
+				w.Write(newline)
+				w.Write(<-c.send)
+			}
+
+			// Закрываем врайтер
+			if err := w.Close(); err != nil {
+				return
+			}
+
+		// отправляем клиенту пинг
+		case <-ticker.C:
+			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
+			if err := c.conn.WriteMessage(websocket.PingMessage, nil); err != nil {
+				return
+			}
 		}
 	}
-
 }
 
 func (c *Client) read() {
+
+	// При завершении функции убиваем коннект
+	defer func() {
+		c.hub.unregister <- c
+		c.conn.Close()
+	}()
+
+
 	c.conn.SetReadLimit(maxMessageSize)
 	c.conn.SetReadDeadline(time.Now().Add(pongWait))
 	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+
+
 	for {
+		// читаем сообщение
 		_, message, err := c.conn.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
@@ -73,8 +111,11 @@ func (c *Client) read() {
 			}
 			break
 		}
+		// Обрабатываем
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 
-		fmt.Println(message)
+		// добавляем в буфер сообщений
+		c.hub.broadcast <- message
+
 	}
 }

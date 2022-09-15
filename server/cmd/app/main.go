@@ -1,4 +1,4 @@
-package main
+﻿package main
 
 import (
 	"github.com/qudecim/chess/internal/app"
@@ -6,6 +6,7 @@ import (
 
 func main() {
 
+	// Запускаем приложение
 	app.Run()
 
 }

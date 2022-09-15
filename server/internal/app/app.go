@@ -1,14 +1,12 @@
-package app
+﻿package app
 
 import (
-	"fmt"
 	"github.com/qudecim/chess/internal/controller/ws"
 )
 
 func Run() {
-	fmt.Println("Started...")
 
+	// Влючаем сокеты и т.д.
 	v1.Init()
 
-	fmt.Println("End...")
 }
