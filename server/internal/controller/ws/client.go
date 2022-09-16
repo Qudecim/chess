@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"log"
 	"github.com/gorilla/websocket"
-	"github.com/qudecim/chess/internal/game/action"
 )
 
 const (
@@ -118,7 +117,7 @@ func (c *Client) read() {
 		// добавляем в буфер сообщений
 		//c.hub.broadcast <- message
 
-		game.Run(message)
+		run(message, c)
 
 	}
 }

@@ -2,7 +2,7 @@ package v1
 
 type Room struct {
 
-	name string
+	name []byte
 
 	clients chan *Client
 

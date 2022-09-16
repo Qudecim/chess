@@ -1,4 +1,4 @@
-package game
+package v1
 
 import (
 	"encoding/json"
@@ -8,13 +8,15 @@ import (
 
 type Action struct {
 
-	action string
+	Action string `json:"action"`
+
+	Test int `json:"test"`
 
 }
 
 type ActionRoom struct {
 	
-	room_name string
+	room_name []byte
 
 }
 
@@ -31,16 +33,22 @@ type ActionMove struct {
 
 }
 
-func Run(message []byte) {
-	var action Action
+type testStruct struct {
+    Clip string `json:"clip"`
+}
 
-	err := json.Unmarshal(message, &action)
-    if err != nil {
- 
-        log.Fatal(err)
+
+func run(message []byte, c *Client) {
+	var action Action
+	fmt.Println(string(message))
+	d := "{\"action\":\"create_room\",\"test\":5}"
+	err2 := json.Unmarshal([]byte(d), &action)
+    if err2 != nil {
+		fmt.Println(fmt.Sprintf("%#v", err2))
+        log.Fatal(err2)
     }
-	fmt.Println(action)
-	switch string(action.action) {
+	fmt.Println(fmt.Sprintf("%#v", action))
+	switch string(action.Action) {
 		case "create_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)
@@ -48,6 +56,8 @@ func Run(message []byte) {
 				log.Fatal(err)
 			}
 			fmt.Println("create_room")
+			room := &Room{name:actionRoom.room_name, clients: make(chan *Client)}
+			c.hub.rooms[room] = true
 		case "join_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)
