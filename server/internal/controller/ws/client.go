@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"log"
 	"github.com/gorilla/websocket"
+	"github.com/qudecim/chess/internal/game/action"
 )
 
 const (
@@ -115,7 +116,9 @@ func (c *Client) read() {
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 
 		// добавляем в буфер сообщений
-		c.hub.broadcast <- message
+		//c.hub.broadcast <- message
+
+		game.Run(message)
 
 	}
 }

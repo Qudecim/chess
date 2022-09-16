@@ -31,7 +31,7 @@ type ActionMove struct {
 
 }
 
-func run(message []byte) {
+func Run(message []byte) {
 	var action Action
 
 	err := json.Unmarshal(message, &action)
@@ -39,14 +39,15 @@ func run(message []byte) {
  
         log.Fatal(err)
     }
-
-	switch action.action {
+	fmt.Println(action)
+	switch string(action.action) {
 		case "create_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)
 			if err != nil {
 				log.Fatal(err)
 			}
+			fmt.Println("create_room")
 		case "join_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)

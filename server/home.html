@@ -23,7 +23,14 @@ window.onload = function () {
         if (!msg.value) {
             return false;
         }
-        conn.send(msg.value);
+
+        let data = {
+            'action': 'create_room'
+        };
+
+        let s = JSON.stringify(data);
+        conn.send(s);
+        //conn.send(msg.value);
         msg.value = "";
         return false;
     };
