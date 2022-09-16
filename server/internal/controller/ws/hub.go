@@ -13,6 +13,9 @@ type Hub struct {
 
 	// Клиенты которые уходят
 	unregister chan *Client
+
+	// Игровые комнаты
+	rooms map[*Room]bool
 }
 
 func newHub() *Hub {
@@ -21,6 +24,7 @@ func newHub() *Hub {
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
 		clients:    make(map[*Client]bool),
+		rooms:      make(map[*Room]bool),
 	}
 }
 
