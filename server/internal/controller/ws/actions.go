@@ -10,8 +10,6 @@ type Action struct {
 
 	Action string `json:"action"`
 
-	Test int `json:"test"`
-
 }
 
 type ActionRoom struct {
@@ -33,19 +31,14 @@ type ActionMove struct {
 
 }
 
-type testStruct struct {
-    Clip string `json:"clip"`
-}
 
 
 func run(message []byte, c *Client) {
 	var action Action
-	fmt.Println(string(message))
-	d := "{\"action\":\"create_room\",\"test\":5}"
-	err2 := json.Unmarshal([]byte(d), &action)
-    if err2 != nil {
-		fmt.Println(fmt.Sprintf("%#v", err2))
-        log.Fatal(err2)
+
+	err := json.Unmarshal(message, &action)
+    if err != nil {
+        log.Fatal(err)
     }
 	fmt.Println(fmt.Sprintf("%#v", action))
 	switch string(action.Action) {
@@ -56,14 +49,21 @@ func run(message []byte, c *Client) {
 				log.Fatal(err)
 			}
 			fmt.Println("create_room")
-			room := &Room{name:actionRoom.room_name, clients: make(chan *Client)}
-			c.hub.rooms[room] = true
+			//room := &Room{name:actionRoom.room_name}
+			//room.white = c
+
+			room := newRoom(actionRoom.room_name, c)
+
+			c.hub.rooms[string(actionRoom.room_name)] = room
 		case "join_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)
 			if err != nil {
 				log.Fatal(err)
 			}
+			fmt.Println("join_room")
+			c.hub.rooms[string(actionRoom.room_name)].black = c
+			fmt.Println(fmt.Sprintf("%#v", c.hub.rooms[string(actionRoom.room_name)]))
 		case "leave_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)

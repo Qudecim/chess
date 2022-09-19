@@ -16,25 +16,40 @@ window.onload = function () {
         }
     }
 
-    document.getElementById("form").onsubmit = function () {
+    document.getElementById("create_room").onclick = function () {
         if (!conn) {
-            return false;
-        }
-        if (!msg.value) {
             return false;
         }
 
         let data = {
             'action': 'create_room',
-            'test':5
+            'room_name': 'room1'
         };
 
         let s = JSON.stringify(data);
         conn.send(s);
-        //conn.send(msg.value);
         msg.value = "";
+
         return false;
-    };
+    }
+
+    document.getElementById("join_room").onclick = function () {
+        if (!conn) {
+            return false;
+        }
+
+        let data = {
+            'action': 'join_room',
+            'room_name': 'room1'
+        };
+
+        let s = JSON.stringify(data);
+        conn.send(s);
+        msg.value = "";
+
+        return false;
+    }
+
 
     if (window["WebSocket"]) {
         //conn = new WebSocket("ws://" + document.location.host + "/ws");
@@ -65,43 +80,37 @@ html {
 }
 
 body {
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    background: gray;
+
 }
 
 #log {
-    background: white;
-    margin: 0;
-    padding: 0.5em 0.5em 0.5em 0.5em;
-    position: absolute;
-    top: 0.5em;
-    left: 0.5em;
-    right: 0.5em;
-    bottom: 3em;
-    overflow: auto;
+    border: 1px solid #808080;
+    width: 500px;
+    height:200px;
 }
 
-#form {
-    padding: 0 0.5em 0 0.5em;
-    margin: 0;
-    position: absolute;
-    bottom: 1em;
-    left: 0px;
-    width: 100%;
-    overflow: hidden;
-}
+    .controls {
+        display:flex;
+        margin-top:5px;
+    }
+
+    .button {
+        padding: 10px 20px;
+        background: #0094ff;
+        margin-right: 5px;
+        border-radius: 3px;
+        cursor: pointer;
+        color:#fff;
+    }
+
 
 </style>
 </head>
 <body>
 <div id="log"></div>
-<form id="form">
-    <input type="submit" value="Send" />
-    <input type="text" id="msg" size="64" autofocus />
-</form>
+<div class="controls">
+    <div class="button" id="create_room">Create room</div>
+    <div class="button" id="join_room">Join room</div>
+</div>
 </body>
 </html>

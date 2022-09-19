@@ -15,7 +15,7 @@ type Hub struct {
 	unregister chan *Client
 
 	// Игровые комнаты
-	rooms map[*Room]bool
+	rooms map[string]*Room
 }
 
 func newHub() *Hub {
@@ -24,7 +24,7 @@ func newHub() *Hub {
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
 		clients:    make(map[*Client]bool),
-		rooms:      make(map[*Room]bool),
+		rooms:      make(map[string]*Room),
 	}
 }
 
