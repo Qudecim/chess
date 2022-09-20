@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"fmt"
 	"github.com/qudecim/chess/internal/game"
 )
 
@@ -13,21 +12,17 @@ type Room struct {
 
 	black *Client
 
-	game Game
+	game game.Game
 
 }
 
 
 func newRoom(name []byte, c *Client) *Room {
 
-	d:=NewGame()
-
-	fmt.Println(d)
-
 	return &Room {
 		name:name,
 		white:c,
-		game: NewGame(),
+		game: game.NewGame(),
 
 	}
 }
