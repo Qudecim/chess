@@ -50,6 +50,24 @@ window.onload = function () {
         return false;
     }
 
+    document.getElementById("move").onclick = function () {
+        if (!conn) {
+            return false;
+        }
+
+        let data = {
+            'action': 'move',
+            'from': {v:1,h:1},
+            'to': {v:2,h:2}
+        };
+
+        let s = JSON.stringify(data);
+        conn.send(s);
+        msg.value = "";
+
+        return false;
+    }
+
 
     if (window["WebSocket"]) {
         //conn = new WebSocket("ws://" + document.location.host + "/ws");
@@ -111,6 +129,7 @@ body {
 <div class="controls">
     <div class="button" id="create_room">Create room</div>
     <div class="button" id="join_room">Join room</div>
+    <div class="button" id="move">move</div>
 </div>
 </body>
 </html>

@@ -53,8 +53,8 @@ func run(message []byte, c *Client) {
 			//room.white = c
 
 			room := newRoom(actionRoom.room_name, c)
-
 			c.hub.rooms[string(actionRoom.room_name)] = room
+			c.room = room
 		case "join_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)
@@ -76,6 +76,8 @@ func run(message []byte, c *Client) {
 			if err != nil {
 				log.Fatal(err)
 			}
+			c.room.white.send <- []byte("MMove")
+			c.room.black.send <- []byte("MMove")
 		default:
 			fmt.Println("default")
 	}

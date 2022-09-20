@@ -33,6 +33,8 @@ type Client struct {
 	hub *Hub
 
 	send chan []byte
+
+	room *Room
 }
 
 

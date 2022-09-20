@@ -1,5 +1,10 @@
 package v1
 
+import (
+	"fmt"
+	"github.com/qudecim/chess/internal/game"
+)
+
 type Room struct {
 
 	name []byte
@@ -8,36 +13,21 @@ type Room struct {
 
 	black *Client
 
-	board [8][8]Cell
-
-	next_move int
+	game Game
 
 }
 
-type Cell struct {
-
-	name string
-
-}
 
 func newRoom(name []byte, c *Client) *Room {
 
-	emptyCell := Cell{name:"empty"}
+	d:=NewGame()
 
-	 board := [8][8]Cell{
-		{emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell},
-		{emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell},
-		{emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell},
-		{emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell},
-		{emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell},
-		{emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell},
-		{emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell,emptyCell},
-	 }
+	fmt.Println(d)
 
 	return &Room {
 		name:name,
 		white:c,
-		board:board,
-		next_move:0,
+		game: NewGame(),
+
 	}
 }

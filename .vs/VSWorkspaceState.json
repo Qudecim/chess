@@ -11,6 +11,6 @@
     "\\server\\internal\\game",
     "\\server\\internal\\game\\action"
   ],
-  "SelectedNode": "\\server\\home.html",
+  "SelectedNode": "\\server\\internal\\controller\\ws\\client.go",
   "PreviewInSolutionExplorer": false
 }
