@@ -14,7 +14,7 @@ type Action struct {
 
 type ActionRoom struct {
 	
-	room_name []byte
+	Room_name string `json:"room_name"`
 
 }
 
@@ -48,12 +48,11 @@ func run(message []byte, c *Client) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println("create_room")
+			fmt.Println(actionRoom)
 			//room := &Room{name:actionRoom.room_name}
 			//room.white = c
-
-			room := newRoom(actionRoom.room_name, c)
-			c.hub.rooms[string(actionRoom.room_name)] = room
+			room := newRoom([]byte(actionRoom.Room_name), c)
+			c.hub.rooms[actionRoom.Room_name] = room
 			c.room = room
 		case "join_room":
 			var actionRoom ActionRoom
@@ -62,8 +61,8 @@ func run(message []byte, c *Client) {
 				log.Fatal(err)
 			}
 			fmt.Println("join_room")
-			c.hub.rooms[string(actionRoom.room_name)].black = c
-			fmt.Println(fmt.Sprintf("%#v", c.hub.rooms[string(actionRoom.room_name)]))
+			c.hub.rooms[actionRoom.Room_name].black = c
+			fmt.Println(fmt.Sprintf("%#v", c.hub.rooms[actionRoom.Room_name]))
 		case "leave_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)

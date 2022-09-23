@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat Example</title>
+</head>
+<body>
+    <div class="join">
+        <input type="text" id="roomName"/>
+        <div class="ctrl">
+            <div class="btn" id="createRoom">Create</div>
+            <div class="btn" id="joinRoom">Join</div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+
+    <style>
+        .join {
+            width:150px;
+        }
+        .join input {
+            width:100%;
+        }
+        .join .ctrl {
+            display:flex;
+            justify-content:space-between;
+            flex-direction:column;
+            width:100%;
+            
+        }
+        .join .ctrl .btn {
+            margin-top: 5px;
+            display: flex;
+            background: #1e90ff;
+            color: #fff;
+            border-radius: 3px;
+            padding: 5px 0;
+            justify-content:center;
+        }
+    </style>
+
+</body>
+</html>
