@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\server",
-    "\\server\\cmd",
-    "\\server\\cmd\\app",
     "\\server\\internal",
     "\\server\\internal\\app",
     "\\server\\internal\\controller",
     "\\server\\internal\\controller\\ws",
     "\\server\\internal\\game",
-    "\\server\\internal\\game\\action"
+    "\\web",
+    "\\web\\app",
+    "\\web\\app\\chessmen"
   ],
-  "SelectedNode": "\\server\\internal\\controller\\ws\\client.go",
+  "SelectedNode": "\\server\\internal\\game\\game.go",
   "PreviewInSolutionExplorer": false
 }
