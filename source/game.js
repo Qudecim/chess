@@ -107,7 +107,7 @@ export default {
     move(h, v) {
         
         // Здесь будет проверка на возможность хода
-
+        console.log('game.move')
         let from = {h, v}
         let to = {h: this.active.h, v: this.active.v}
         ctrl.move(from, to)
