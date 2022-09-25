@@ -28,6 +28,7 @@ export default {
         let x = Math.floor(e.offsetX / game.block)
         let y = Math.floor(e.offsetY / game.block)
         console.log([x, y])
+        game.move(y, x)
     },
     move(e) {
         game.cursor.x = e.offsetX

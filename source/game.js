@@ -1,4 +1,5 @@
-import Piece from './piece'
+import ctrl from './ctrl';
+import { Piece } from './piece'
 
 export default {
 
@@ -7,6 +8,10 @@ export default {
     cursor: {
         x: 0,
         y: 0,
+    },
+    active: {
+        h: 0,
+        v: 0,
     },
     block: 50,
     roomName: '',
@@ -90,6 +95,23 @@ export default {
 
             }
         }
+    },
+
+    select() {
+        if (this.board[v][h] !== null) {
+            // this.board[v][h].set_active()
+            this.active = {v, h}
+        }
+    },
+
+    move(h, v) {
+        
+        // Здесь будет проверка на возможность хода
+
+        let from = {h, v}
+        let to = {h: this.active.h, v: this.active.v}
+        ctrl.move(from, to)
+
     },
 
 }
