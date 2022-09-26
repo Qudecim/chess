@@ -9,11 +9,10 @@ export default {
     cursor: {
         x: 0,
         y: 0,
+        ox: 0,
+        oy: 0,
     },
-    active: {
-        h: 0,
-        v: 0,
-    },
+    active: null,
     block: 50,
     roomName: '',
     board: [
@@ -62,6 +61,8 @@ export default {
 
     draw() {
         this.draw_board()
+        this.draw_chessmen()
+        this.draw_tips()
     },
 
     tic() {
@@ -98,20 +99,44 @@ export default {
         }
     },
 
-    select() {
-        if (this.board[v][h] !== null) {
-            // this.board[v][h].set_active()
-            this.active = {v, h}
+    draw_tips: function () {
+        if (this.active !== null) {
+            this.board[this.active.v][this.active.h].drawTips()
         }
     },
 
-    move(h, v) {
+    select(v, h) {
+        if (this.board[v][h] !== null) {
+            this.board[v][h].setActive()
+            this.active = { v, h }
+        }
+    },
+
+    move(v, h) {
         
         // Здесь будет проверка на возможность хода
-        console.log('game.move')
-        let from = {h, v}
-        let to = {h: this.active.h, v: this.active.v}
-        ws.move(from, to)
+
+        if (this.active) {
+            
+            if (this.board[this.active.v][this.active.h] !== null) {
+                let steps = this.board[this.active.v][this.active.h].getSteps()
+
+                for (let step of steps) {
+                    if (step.h === h && step.v === v) {
+                        this.board[this.active.v][this.active.h].go(h, v)
+                        this.active = { v, h }
+
+                        let from = { h, v }
+                        let to = { h: this.active.h, v: this.active.v }
+                        //ws.move(from, to)
+
+                    }
+
+                }
+            }
+            this.board[this.active.v][this.active.h].setDisactive()
+            this.active = null
+        }
 
     },
 

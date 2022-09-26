@@ -10,4 +10,8 @@ export class Pawn {
         return []
     }
 
+    getSteps(color, h, v) {
+        return [{h:3, v:3}]
+    }
+
 }

@@ -23,6 +23,7 @@ export default {
         game.cursor.ox = (x * game.block) - e.offsetX;
         game.cursor.oy = (y * game.block) - e.offsetY;
         console.log([x, y])
+        game.select(y,x)
     },
     up(e) {
         let x = Math.floor(e.offsetX / game.block)

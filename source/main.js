@@ -1,9 +1,11 @@
 import ws from './ws'
 import ctrl from './ctrl'
 import game from './game';
+import res from './res'
 
 console.log('Start');
 
+res.start()
 game.init()
 ctrl.start()
 ws.start()
@@ -11,6 +13,6 @@ ws.start()
 game.start()
 
 
-setTimeout(() => {
+setInterval(() => {
     game.tic()
-}, 1000)
+}, 100)
