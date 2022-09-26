@@ -1,5 +1,6 @@
 import ctrl from './ctrl';
 import { Piece } from './piece'
+import ws from './ws'
 
 export default {
 
@@ -46,7 +47,7 @@ export default {
     },
 
     start() {
-        document.getElementById('join').style.display = 'none'
+        
 
         for (let v = 0; v < 8; v++) {
             for (let h = 0; h < 8; h++) {
@@ -110,7 +111,7 @@ export default {
         console.log('game.move')
         let from = {h, v}
         let to = {h: this.active.h, v: this.active.v}
-        ctrl.move(from, to)
+        ws.move(from, to)
 
     },
 

@@ -1,7 +1,14 @@
 export default {
 
     run(message) {
-
+        switch(message.action) {
+            case 'move':
+                console.log('move')
+                this.move(message.from, message.to)
+                break;
+            default:
+                console.error('Event didnt find')
+        }
     },
 
     start(color) {
@@ -13,7 +20,7 @@ export default {
     },
 
     move(from, to) {
-
+        console.log(['Moooove', from, to])
     },
 
 }

@@ -14,6 +14,7 @@ export default {
         }
         this.conn.onmessage = function (evt) {
             let data = JSON.parse(evt.data)
+            console.log(evt.data)
             events.run(data)
         }
     },

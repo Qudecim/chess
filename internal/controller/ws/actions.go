@@ -71,12 +71,28 @@ func run(message []byte, c *Client) {
 			}
 		case "move":
 			var actionMove ActionMove
+			
 			err := json.Unmarshal(message, &actionMove)
 			if err != nil {
 				log.Fatal(err)
 			}
-			c.room.white.send <- []byte("MMove")
-			c.room.black.send <- []byte("MMove")
+
+			color := 0
+			if (c.room.black == c) {
+				color = 1
+			}
+
+			move := c.room.game.Move(color, actionMove.from.v, actionMove.from.h, actionMove.to.v, actionMove.to.h,)
+
+			if (move) {
+				if (color == 0) {
+					c.room.black.send <- message
+				} else {
+					c.room.white.send <- message
+				}
+			}
+			
+
 		default:
 			fmt.Println("default")
 	}
