@@ -1,6 +1,9 @@
+import game from './game'
+
 export default {
 
     run(message) {
+        console.log(message)
         switch(message.action) {
             case 'move':
                 console.log('move')
@@ -21,6 +24,7 @@ export default {
 
     move(from, to) {
         console.log(['Moooove', from, to])
+        game.board[from.v][from.h].go(to.h, to.v)
     },
 
 }
