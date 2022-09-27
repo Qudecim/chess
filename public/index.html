@@ -24,6 +24,10 @@
         </div>
     </div>
 
+    <div class="wait" id="wait" style="display: none;">
+        <div class="overlay">Wait...</div>
+    </div>
+
     <script src="main.js"></script>
 
     <style>
@@ -85,6 +89,22 @@
         #canvas {
             width: 100%;
             height: 100%;
+        }
+        .wait {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+        .wait .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a131bc2;
+            color: #fff;
+            font-size: 24px;
         }
     </style>
 

@@ -19,6 +19,7 @@ export default {
 
     start(color) {
         console.log(color)
+        document.getElementById('wait').style.display = 'none'
     },
 
     end(isWin) {
