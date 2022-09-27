@@ -9,13 +9,16 @@ export default {
                 console.log('move')
                 this.move(message.from, message.to)
                 break;
+            case 'start':
+                this.start(message.color)
+                break;
             default:
                 console.error('Event didnt find')
         }
     },
 
     start(color) {
-
+        console.log(color)
     },
 
     end(isWin) {

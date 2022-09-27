@@ -40,7 +40,7 @@ func run(message []byte, c *Client) {
     if err != nil {
         log.Fatal(err)
     }
-	fmt.Println(fmt.Sprintf("%#v", action))
+
 	switch string(action.Action) {
 		case "create_room":
 			var actionRoom ActionRoom
@@ -48,7 +48,6 @@ func run(message []byte, c *Client) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println(actionRoom)
 			//room := &Room{name:actionRoom.room_name}
 			//room.white = c
 			room := newRoom([]byte(actionRoom.Room_name), c)
@@ -60,9 +59,9 @@ func run(message []byte, c *Client) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println("join_room")
 			c.hub.rooms[actionRoom.Room_name].black = c
-			fmt.Println(fmt.Sprintf("%#v", c.hub.rooms[actionRoom.Room_name]))
+			c.room = c.hub.rooms[actionRoom.Room_name]
+			c.room.Start()
 		case "leave_room":
 			var actionRoom ActionRoom
 			err := json.Unmarshal(message, &actionRoom)
@@ -71,7 +70,7 @@ func run(message []byte, c *Client) {
 			}
 		case "move":
 			var actionMove ActionMove
-			
+
 			err := json.Unmarshal(message, &actionMove)
 			if err != nil {
 				log.Fatal(err)
@@ -80,6 +79,19 @@ func run(message []byte, c *Client) {
 			color := 0
 			if (c.room.black == c) {
 				color = 1
+			}
+
+			fmt.Println("move:")
+			fmt.Println(c.room.canMove)
+			fmt.Println(color)
+			if (c.room.canMove != color) {
+				return
+			}
+
+			if (color == 0) {
+				c.room.canMove = 1
+			} else {
+				c.room.canMove = 0
 			}
 
 			move := c.room.game.Move(color, actionMove.from.v, actionMove.from.h, actionMove.to.v, actionMove.to.h,)

@@ -28,6 +28,8 @@ export default {
     },
 
     move(from, to) {
+        console.log('Send move data')
+        console.log({from, to})
         this.send('move', {from, to})
     },
 

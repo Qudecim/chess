@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"log"
 	"github.com/gorilla/websocket"
-	"fmt"
+	//"fmt"
 )
 
 const (
@@ -120,7 +120,7 @@ func (c *Client) read() {
 		// добавляем в буфер сообщений
 		//c.hub.broadcast <- message
 
-		fmt.Println(message)
+		//fmt.Println(message)
 
 		run(message, c)
 

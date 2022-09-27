@@ -124,12 +124,12 @@ export default {
                 for (let step of steps) {
                     if (step.h === h && step.v === v) {
                         this.board[this.active.v][this.active.h].go(h, v)
+                        let from = { h: this.active.h, v: this.active.v }
+                        let to = { h, v }
+                        
+                        ws.move(from, to)
+
                         this.active = { v, h }
-
-                        let from = { h, v }
-                        let to = { h: this.active.h, v: this.active.v }
-                        //ws.move(from, to)
-
                     }
 
                 }
