@@ -1,11 +1,9 @@
-import ctrl from './ctrl';
 import { Piece } from './piece'
 import ws from './ws'
+import gui from './gui/gui'
 
 export default {
 
-    canvas: null,
-    ctx: null,
     cursor: {
         x: 0,
         y: 0,
@@ -41,13 +39,10 @@ export default {
     conn: null,
 
     init() {
-        this.canvas = document.getElementById('canvas');
-        this.ctx = this.canvas.getContext('2d');
+
     },
 
     start() {
-        
-
         for (let v = 0; v < 8; v++) {
             for (let h = 0; h < 8; h++) {
                 if (this.start_positions[v][h] !== null) {
@@ -59,51 +54,10 @@ export default {
         this.tic()
     },
 
-    draw() {
-        this.draw_board()
-        this.draw_chessmen()
-        this.draw_tips()
-    },
-
     tic() {
-        this.draw()
+        gui.draw(this.block, this.board, this.cursor, this.active)
     },
 
-    draw_board: function () {
-        this.ctx.fillStyle = 'rgb(255, 255, 255)';
-        this.ctx.fillRect(0, 0, this.block * 8, this.block * 8);
-        let sum = 0;
-        for(let v = 0; v < 8; v++) {
-            for (let h = 0; h < 8; h++) {
-                if (sum % 2 === -0) {
-                    this.ctx.fillStyle = '#ceb29c';
-                } else {
-                    this.ctx.fillStyle = '#f5e6cf';
-                }
-                this.ctx.fillRect(h * this.block, v * this.block, this.block, this.block);
-                sum++;
-            }
-            sum++;
-        }
-    },
-
-    draw_chessmen: function () {
-        for(let v = 0; v < 8; v++) {
-            for (let h = 0; h < 8; h++) {
-
-                if (this.board[v][h] !== null) {
-                    this.board[v][h].draw()
-                }
-
-            }
-        }
-    },
-
-    draw_tips: function () {
-        if (this.active !== null) {
-            this.board[this.active.v][this.active.h].drawTips()
-        }
-    },
 
     select(v, h) {
         if (!this.canMove) {return}
@@ -116,8 +70,6 @@ export default {
 
     move(v, h) {
         
-        // Здесь будет проверка на возможность хода
-
         if (this.active) {
             
             if (this.board[this.active.v][this.active.h] !== null) {

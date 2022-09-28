@@ -2,11 +2,7 @@ import game from './../game'
 
 export class Pawn {
 
-    draw() {
-        return {
-            sprite: 5
-        };
-    }
+    sprite = 5
 
     getSteps(color, v, h) {
         let steps = [];

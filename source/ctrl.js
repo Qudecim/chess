@@ -1,5 +1,6 @@
 import room from './room'
 import game from './game'
+import gui from './gui/gui'
 
 export default {
 
@@ -12,9 +13,9 @@ export default {
             room.join(document.getElementById('roomName').value)
         })
         
-        game.canvas.addEventListener("mousedown", this.down);
-        game.canvas.addEventListener("mouseup", this.up);
-        game.canvas.addEventListener("mousemove", this.move);
+        gui.canvas.addEventListener("mousedown", this.down);
+        gui.canvas.addEventListener("mouseup", this.up);
+        gui.canvas.addEventListener("mousemove", this.move);
     },
 
     down(e) {

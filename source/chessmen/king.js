@@ -2,11 +2,7 @@ import game from './../game'
 
 export class King {
 
-    draw() {
-        return {
-            sprite: 0
-        };
-    }
+    sprite = 0
 
     getSteps(color, v, h) {
         let result = []

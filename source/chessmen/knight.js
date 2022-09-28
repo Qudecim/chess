@@ -2,11 +2,7 @@ import game from './../game'
 
 export class Knight {
 
-    draw() {
-        return {
-            sprite: 3
-        };
-    }
+    sprite = 3
 
     getSteps(color, v, h) {
         let result = []

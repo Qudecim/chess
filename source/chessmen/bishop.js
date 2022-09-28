@@ -2,11 +2,7 @@ import game from './../game'
 
 export class Bishop {
     
-    draw() {
-        return {
-            sprite: 2
-        };
-    }
+    sprite = 2
 
     getSteps(color, v, h) {
         let result = []

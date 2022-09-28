@@ -2,11 +2,7 @@ import game from './../game'
 
 export class Rook {
 
-    draw() {
-        return {
-            sprite: 4
-        };
-    }
+    sprite = 4
 
     getSteps(color, v, h) {
         let result = []
