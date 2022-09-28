@@ -1,4 +1,4 @@
-import res from './../res'
+import res from '../res'
 
 export default {
 
@@ -14,7 +14,7 @@ export default {
     },
 
     /**
-     * Инициализация GUI
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
      * */
     init() {
         this.canvas = document.getElementById('canvas');
@@ -22,7 +22,7 @@ export default {
     },
 
     /**
-     * Основной метод отрисовки
+     * РћСЃРЅРѕРІРЅРѕР№ РјРµС‚РѕРґ РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё
      * 
      * @param {any} boxSize
      * @param {any} board
@@ -36,7 +36,7 @@ export default {
     },
 
     /**
-     * Отрисовка доски
+     * РћС‚СЂРёСЃРѕРІРєР° РґРѕСЃРєРё
      * 
      * @param {any} boxSize
      */
@@ -59,7 +59,7 @@ export default {
     },
 
     /**
-     * Отрисовка фигур
+     * РћС‚СЂРёСЃРѕРІРєР° С„РёРіСѓСЂ
      * 
      * @param {any} boxSize
      * @param {any} board
@@ -76,7 +76,7 @@ export default {
     },
 
     /**
-     * Отрисовка фигуры
+     * РћС‚СЂРёСЃРѕРІРєР° С„РёРіСѓСЂС‹
      * 
      * @param {any} piece
      * @param {any} boxSize
@@ -93,7 +93,7 @@ export default {
     },
 
     /**
-     * Отрисовка подсказок возможных ходов
+     * РћС‚СЂРёСЃРѕРІРєР° РїРѕРґСЃРєР°Р·РѕРє
      * 
      * @param {any} boxSize
      * @param {any} board

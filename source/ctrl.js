@@ -1,10 +1,17 @@
 import room from './room'
 import game from './game'
-import gui from './gui/gui'
+import draw from './gui/draw'
 
 export default {
 
-    start() {
+    cursor: {
+        x: 0,
+        y: 0,
+        ox: 0,
+        oy: 0,
+    },
+
+    init() {
         document.getElementById('createRoom').addEventListener('click', (event) => {
             room.create(document.getElementById('roomName').value)
         })
@@ -13,9 +20,9 @@ export default {
             room.join(document.getElementById('roomName').value)
         })
         
-        gui.canvas.addEventListener("mousedown", this.down);
-        gui.canvas.addEventListener("mouseup", this.up);
-        gui.canvas.addEventListener("mousemove", this.move);
+        draw.canvas.addEventListener("mousedown", this.down);
+        draw.canvas.addEventListener("mouseup", this.up);
+        draw.canvas.addEventListener("mousemove", this.move);
     },
 
     down(e) {
@@ -23,13 +30,13 @@ export default {
         let y = Math.floor(e.offsetY / game.block)
         game.cursor.ox = (x * game.block) - e.offsetX;
         game.cursor.oy = (y * game.block) - e.offsetY;
-        console.log([x, y])
+
         game.select(y,x)
     },
     up(e) {
         let x = Math.floor(e.offsetX / game.block)
         let y = Math.floor(e.offsetY / game.block)
-        console.log([x, y])
+
         game.move(y, x)
     },
     move(e) {

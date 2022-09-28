@@ -4,7 +4,7 @@ export default {
         chessmen: null
     },
 
-    start() {
+    init() {
         this.sprites.chessmen = new Image()
         this.sprites.chessmen.src = 'sprites.png';
     }

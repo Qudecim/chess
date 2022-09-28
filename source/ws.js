@@ -4,7 +4,7 @@ export default {
 
     conn: null,
 
-    start() {
+    init() {
         this.conn = new WebSocket("ws://localhost/ws");
         this.conn.onclose = function (evt) {
             console.warn('Connection closed')

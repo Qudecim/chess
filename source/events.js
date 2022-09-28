@@ -1,16 +1,15 @@
 import game from './game'
+import dom from './gui/dom'
 
 export default {
 
-    run(message) {
-        console.log(message)
-        switch(message.action) {
+    run(data) {
+        switch(data.action) {
             case 'move':
-                console.log('move')
-                this.move(message.from, message.to)
+                this.move(data.from, data.to)
                 break;
             case 'start':
-                this.start(message.color)
+                this.start(data.color)
                 break;
             default:
                 console.error('Event didnt find')
@@ -18,7 +17,7 @@ export default {
     },
 
     start(color) {
-        document.getElementById('wait').style.display = 'none'
+        dom.wait(false)
         game.color = color
         game.canMove = (color == 0)
     },

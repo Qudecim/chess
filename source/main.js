@@ -2,18 +2,13 @@ import ws from './ws'
 import ctrl from './ctrl'
 import game from './game';
 import res from './res'
-import gui from './gui/gui'
+import draw from './gui/draw'
 
-console.log('Start');
-
-res.start()
-gui.init()
+res.init()
+draw.init()
 game.init()
-ctrl.start()
-ws.start()
-
-game.start()
-
+ctrl.init()
+ws.init()
 
 setInterval(() => {
     game.tic()
