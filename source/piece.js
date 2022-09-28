@@ -67,7 +67,7 @@ export class Piece {
     }
 
     getSteps() {
-        return this.piece.getSteps(this.color, this.h, this.v)
+        return this.piece.getSteps(this.color, this.v, this.h)
     }
 
     go(h, v) {
@@ -78,7 +78,7 @@ export class Piece {
     }
 
     drawTips() {
-        let steps = this.getSteps(this.color, this.h, this.v)
+        let steps = this.getSteps()
         for (let i = 0; i < steps.length; i++) {
             game.ctx.fillStyle = '#9cc0ce';
             game.ctx.globalAlpha = 0.7;

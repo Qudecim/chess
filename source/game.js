@@ -106,6 +106,7 @@ export default {
     },
 
     select(v, h) {
+        if (!this.canMove) {return}
         if (this.board[v][h] !== null) {
             this.board[v][h].setActive()
             this.active = { v, h }
@@ -128,6 +129,7 @@ export default {
                         let to = { h, v }
                         
                         ws.move(from, to)
+                        this.canMove = false
 
                         this.active = { v, h }
                     }

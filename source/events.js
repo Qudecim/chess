@@ -18,8 +18,9 @@ export default {
     },
 
     start(color) {
-        console.log(color)
         document.getElementById('wait').style.display = 'none'
+        game.color = color
+        game.canMove = (color == 0)
     },
 
     end(isWin) {
@@ -27,8 +28,8 @@ export default {
     },
 
     move(from, to) {
-        console.log(['Moooove', from, to])
         game.board[from.v][from.h].go(to.h, to.v)
+        game.canMove = true
     },
 
 }
