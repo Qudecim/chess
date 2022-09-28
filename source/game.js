@@ -108,6 +108,7 @@ export default {
     select(v, h) {
         if (!this.canMove) {return}
         if (this.board[v][h] !== null) {
+            if (this.board[v][h].color !== this.color) {return}
             this.board[v][h].setActive()
             this.active = { v, h }
         }
