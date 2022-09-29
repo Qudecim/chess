@@ -4,11 +4,20 @@ import (
 	"encoding/json"
 	"log"
 	"fmt"
+	"github.com/qudecim/chess/internal/game"
 )
 
-type Action struct {
+type Request struct {
 
-	Action string `json:"action"`
+	Action string  `json:"action"`
+
+	CreateRoom ActionRoom `json:"create_room"`
+
+	JoinRoom ActionRoom `json:"join_room"`
+
+	LeaveRoom ActionRoom `json:"leave_room"`
+
+	Move game.Move `json:"move"`
 
 }
 
@@ -18,72 +27,40 @@ type ActionRoom struct {
 
 }
 
-type Moves struct {
-
-	v int
-	h int
-}
-
-type ActionMove struct {
-
-	from Moves
-	to Moves
-
-}
-
-
 
 func run(message []byte, c *Client) {
-	var action Action
+	var request Request
 
-	err := json.Unmarshal(message, &action)
+	err := json.Unmarshal(message, &request)
     if err != nil {
         log.Fatal(err)
     }
 
-	switch string(action.Action) {
+	switch string(request.Action) {
+		// Создание комнаты
 		case "create_room":
-			var actionRoom ActionRoom
-			err := json.Unmarshal(message, &actionRoom)
-			if err != nil {
-				log.Fatal(err)
-			}
-			//room := &Room{name:actionRoom.room_name}
-			//room.white = c
-			room := newRoom([]byte(actionRoom.Room_name), c)
-			c.hub.rooms[actionRoom.Room_name] = room
+			room := newRoom([]byte(request.CreateRoom.Room_name), c)
+			c.hub.rooms[request.CreateRoom.Room_name] = room
 			c.room = room
-		case "join_room":
-			var actionRoom ActionRoom
-			err := json.Unmarshal(message, &actionRoom)
-			if err != nil {
-				log.Fatal(err)
-			}
-			c.hub.rooms[actionRoom.Room_name].black = c
-			c.room = c.hub.rooms[actionRoom.Room_name]
-			c.room.Start()
-		case "leave_room":
-			var actionRoom ActionRoom
-			err := json.Unmarshal(message, &actionRoom)
-			if err != nil {
-				log.Fatal(err)
-			}
-		case "move":
-			var actionMove ActionMove
 
-			err := json.Unmarshal(message, &actionMove)
-			if err != nil {
-				log.Fatal(err)
-			}
+		// Присоедениться к комнате
+		case "join_room":
+			c.hub.rooms[request.JoinRoom.Room_name].black = c
+			c.room = c.hub.rooms[request.JoinRoom.Room_name]
+			c.room.Start()
+
+		// Покинуть комнату
+		case "leave_room":
+			// TODO
+
+		// Ход
+		case "move":
+			move := request.Move
 
 			color := 0
 			if (c.room.black == c) {
 				color = 1
 			}
-
-			fmt.Println("move:")
-			fmt.Println(c.room.canMove)
-			fmt.Println(color)
 			if (c.room.canMove != color) {
 				return
 			}
@@ -94,9 +71,9 @@ func run(message []byte, c *Client) {
 				c.room.canMove = 0
 			}
 
-			move := c.room.game.Move(color, actionMove.from.v, actionMove.from.h, actionMove.to.v, actionMove.to.h,)
+			isMove := c.room.game.Move(color, move,)
 
-			if (move) {
+			if (isMove) {
 				if (color == 0) {
 					c.room.black.send <- message
 				} else {
@@ -104,7 +81,7 @@ func run(message []byte, c *Client) {
 				}
 			}
 			
-
+		// Action не найден
 		default:
 			fmt.Println("default")
 	}

@@ -26,7 +26,7 @@ func NewGame() Game {
 
 }
 
-func (g Game) Move(color int, from_v int, from_h int, to_v int, to_h int) bool {
+func (g Game) Move(color int, move Move) bool {
 
 	// change pieces place
 
