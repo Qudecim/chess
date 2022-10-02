@@ -129,6 +129,7 @@ export default {
         let kingPosition = null
         for (let v = 0; v < 8; v++) {
             for (let h = 0; h < 8; h++) {
+                if (this.board[v][h] === null) {continue}
                 if (this.board[v][h].pieceName === 'king' && this.board[v][h].color === color) {
                     kingPosition = {v, h}
                 }

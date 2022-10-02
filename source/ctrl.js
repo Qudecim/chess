@@ -20,16 +20,22 @@ export default {
             room.join(document.getElementById('roomName').value)
         })
         
-        draw.canvas.addEventListener("mousedown", this.down);
-        draw.canvas.addEventListener("mouseup", this.up);
-        draw.canvas.addEventListener("mousemove", this.move);
+        draw.canvas.addEventListener("mousedown", (e) => {
+            this.down(e)
+        });
+        draw.canvas.addEventListener("mouseup", (e) => {
+            this.up(e)
+        });
+        draw.canvas.addEventListener("mousemove", (e) => {
+            this.move(e)
+        });
     },
 
     down(e) {
         let x = Math.floor(e.offsetX / game.block)
         let y = Math.floor(e.offsetY / game.block)
-        game.cursor.ox = (x * game.block) - e.offsetX;
-        game.cursor.oy = (y * game.block) - e.offsetY;
+        this.cursor.ox = (x * game.block) - e.offsetX;
+        this.cursor.oy = (y * game.block) - e.offsetY;
 
         game.select(y,x)
     },
@@ -40,8 +46,8 @@ export default {
         game.move(y, x)
     },
     move(e) {
-        game.cursor.x = e.offsetX
-        game.cursor.y = e.offsetY
+        this.cursor.x = e.offsetX
+        this.cursor.y = e.offsetY
     }
 
 }
