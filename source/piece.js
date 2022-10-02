@@ -12,12 +12,14 @@ export class Piece {
     v = 0
     h = 0
     piece = null
+    pieceName = ''
     active = false
 
     constructor(piece, h, v, color) {
         this.h = h
         this.v = v
         this.color = color
+        this.pieceName = piece
         switch (piece) {
             case 'pawn':
                 this.piece = new Pawn();

@@ -68,7 +68,7 @@ export default {
      * @returns 
      */
     select(v, h) {
-        if (!this.canMove) {return}
+        if (!this.canMove) {return}        
         if (this.board[v][h] !== null) {
             if (this.board[v][h].color !== this.color) {return}
             this.board[v][h].setActive()
@@ -85,6 +85,11 @@ export default {
      * Меняем флаг canMove на ложь, поскольку теперь мы ждем хода противника
      * Дизактивируем активную фигуру
      * 
+     * TODO:
+     * Нужна проверка на шах, при ходе. 
+     * Сначала перемещаем фигуру, потом проверка на шах, если шах то откатываем фигуру назад, и снимаем выделение
+     * Если шаха нет то все норм
+     * Проверка на шах и мат, будет на стороне сервера
      * 
      * @param {*} v 
      * @param {*} h 
@@ -95,12 +100,20 @@ export default {
                 let steps = this.board[this.active.v][this.active.h].getSteps()
                 for (let step of steps) {
                     if (step.h === h && step.v === v) {
+                        let oldPieceOnBox = this.board[v][h]
                         this.board[this.active.v][this.active.h].go(h, v)
-                        let from = { h: this.active.h, v: this.active.v }
-                        let to = { h, v }
-                        ws.move(from, to)
-                        this.canMove = false
-                        this.active = { v, h }
+                        if (this.isCheck(this.color)) {
+                            // roll back
+                            this.board[v][h].go(this.active.h, this.active.v)
+                            this.board[v][h] = oldPieceOnBox
+                        } else {
+                            let from = { h: this.active.h, v: this.active.v }
+                            let to = { h, v }
+                            ws.move(from, to)
+                            this.canMove = false
+                            this.active = { v, h }
+                        }
+
                     }
                 }
             }
@@ -109,5 +122,41 @@ export default {
         }
 
     },
+
+    isCheck(color) {
+        // получаем позицию короля
+        // TODO: лучше хранить данные по корлю в переменной
+        let kingPosition = null
+        for (let v = 0; v < 8; v++) {
+            for (let h = 0; h < 8; h++) {
+                if (this.board[v][h].pieceName === 'king' && this.board[v][h].color === color) {
+                    kingPosition = {v, h}
+                }
+            }
+        }
+
+        // Проверяем угражает ли чужая фигура королю
+        // Перебираем все элементы борда
+        for (let v = 0; v < 8; v++) {
+            for (let h = 0; h < 8; h++) {
+                // Если не нулл
+                if (this.board[v][h] !== null) {
+                    let piece = this.board[v][h]
+                    // Если фигура другого цвета
+                    if (piece.color !== color) {
+                        let steps = piece.getSteps()
+                        // Перебераем все возможные ходы, и смотрим не там ли король
+                        for (let i = 0; i < steps.length; i++) {
+                            if (steps[i].h === kingPosition.h && steps[i].v === kingPosition.v) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 
 }
