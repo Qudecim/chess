@@ -16,16 +16,19 @@ export default {
         }
     },
 
+    // Начало игры
     start(color) {
         dom.wait(false)
         game.color = color
         game.canMove = (color == 0)
     },
 
+    // Конец игры
     end(isWin) {
 
     },
 
+    // Ход противника
     move(from, to) {
         game.board[from.v][from.h].go(to.h, to.v)
         game.canMove = true
