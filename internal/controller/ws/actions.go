@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"fmt"
-	"github.com/qudecim/chess/internal/game"
+	"github.com/qudecim/chess/internal/data"
 )
 
 type Request struct {
@@ -17,7 +17,7 @@ type Request struct {
 
 	LeaveRoom ActionRoom `json:"leave_room"`
 
-	Move game.Move `json:"move"`
+	Move data.Move `json:"move"`
 
 }
 
@@ -30,12 +30,13 @@ type ActionRoom struct {
 
 func run(message []byte, c *Client) {
 	var request Request
-
+	fmt.Println("-------------------------")
+	fmt.Println(string(message))
 	err := json.Unmarshal(message, &request)
     if err != nil {
         log.Fatal(err)
     }
-
+	fmt.Println(request)
 	switch string(request.Action) {
 		// Создание комнаты
 		case "create_room":
@@ -70,7 +71,7 @@ func run(message []byte, c *Client) {
 			} else {
 				c.room.canMove = 0
 			}
-
+			
 			isMove := c.room.game.Move(color, move,)
 
 			if (isMove) {
@@ -79,6 +80,8 @@ func run(message []byte, c *Client) {
 				} else {
 					c.room.white.send <- message
 				}
+			} else {
+				fmt.Println("No possible move")
 			}
 			
 		// Action не найден

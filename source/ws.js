@@ -20,15 +20,15 @@ export default {
     },
 
     joinRoom(name) {
-        this.send('join_room', { 'room_name':name })
+        this.send('join_room', { 'create_room': { 'room_name':name } })
     },
 
     createRoom(name) {
-        this.send('create_room', { 'room_name': name })
+        this.send('create_room', { 'join_room': {'room_name': name} })
     },
 
     move(from, to) {
-        this.send('move', { from, to })
+        this.send('move', {'move':{ from, to }})
     },
 
     send(method, data) {

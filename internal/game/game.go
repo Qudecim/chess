@@ -1,5 +1,10 @@
 package game
 
+import (
+	"github.com/qudecim/chess/internal/data"
+	"fmt"
+)
+
 type Game struct {
 
 	board [8][8]Piece
@@ -26,9 +31,18 @@ func NewGame() Game {
 
 }
 
-func (g Game) Move(color int, move Move) bool {
+func (g Game) Move(color int, move data.Move) bool {
 
-	// change pieces place
+	positions := g.board[move.From.V][move.From.H].GetSteps()
 
-	return true
+	fmt.Println(positions)
+	fmt.Println(move)
+
+	for _, position := range positions {
+		if (position.V == move.To.V && position.H == move.To.H) {
+			return true
+		}
+	}
+
+	return false
 }
