@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"fmt"
-	"github.com/qudecim/chess/internal/data"
+	"github.com/qudecim/chess/internal/game"
 )
 
 type Request struct {
@@ -17,7 +17,7 @@ type Request struct {
 
 	LeaveRoom ActionRoom `json:"leave_room"`
 
-	Move data.Move `json:"move"`
+	Move game.Move `json:"move"`
 
 }
 
@@ -72,9 +72,11 @@ func run(message []byte, c *Client) {
 				c.room.canMove = 0
 			}
 			
+			fmt.Println("before start move")
 			isMove := c.room.game.Move(color, move,)
 
 			if (isMove) {
+				fmt.Println("Possible move")
 				if (color == 0) {
 					c.room.black.send <- message
 				} else {

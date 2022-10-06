@@ -13,7 +13,7 @@ type Room struct {
 
 	black *Client
 
-	game game.Game
+	game *game.Game
 
 	canMove int
 
@@ -22,10 +22,12 @@ type Room struct {
 
 func newRoom(name []byte, c *Client) *Room {
 
+	g := game.NewGame()
+
 	return &Room {
 		name:name,
 		white:c,
-		game: game.NewGame(),
+		game: &g,
 		canMove: 0,
 	}
 }

@@ -4,9 +4,10 @@ import dom from './gui/dom'
 export default {
 
     run(data) {
+        console.log(data);
         switch(data.action) {
             case 'move':
-                this.move(data.from, data.to)
+                this.move(data.move.from, data.move.to)
                 break;
             case 'start':
                 this.start(data.color)
