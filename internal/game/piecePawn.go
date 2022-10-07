@@ -1,8 +1,5 @@
 package game
 
-import (
-	"fmt"
-)
 
 type PiecePawn struct {
 

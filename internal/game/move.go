@@ -6,3 +6,61 @@ type Move struct {
 	To Position `json:"to"`
 
 }
+
+type PieceMove struct {
+
+	h int
+	v int
+	end bool
+
+}
+
+func pm(v int, h int) PieceMove {
+	return PieceMove{v:v, h:h, end:false}
+}
+
+func getSteps(board [8][8]Piece, color int, v int, h int, pms []PieceMove, once bool) []Position {
+	var positions []Position
+
+	steps := 8
+	if (once) {
+		steps = 2
+	}
+
+	for i := 1; i < steps; i++ {
+
+		for index, pm := range pms {
+
+			if (!pm.end) {
+
+				nv := v + (i * pm.v)
+				nh := h + (i * pm.h)
+
+				if (nv < 0 || nv > 7) {
+					continue
+				}
+				if (nh < 0 || nh > 7) {
+					continue
+				}
+
+				if (board[nv][nh].isEmpty) {
+					positions = append(positions, Position{V:nv, H:nh})
+				} else {
+
+					if (board[nv][nh].color != color) {
+						positions = append(positions, Position{V:nv, H:nh})
+					}
+
+					pms[index].end = true
+
+				}
+
+			}
+
+		}
+
+	}
+
+
+	return positions
+}

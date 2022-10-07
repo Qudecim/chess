@@ -4,7 +4,6 @@ type PieceItem interface {
 	GetSteps(board [8][8]Piece, color int, v int, h int) []Position
 }
 
-// TODO: фигура должна хранить позицию себя, для того что бы получить 
 type Piece struct {
 	color int
 	name string
@@ -32,9 +31,9 @@ func NewPiece(color int, name string) Piece {
 	case "bishop":
 		piece = PieceBishop{Name:name}	
 	case "knight":
-		piece = PieceKing{Name:name}
-	case "Rook":
-		piece = PieceKing{Name:name}	
+		piece = PieceKnight{Name:name}
+	case "rook":
+		piece = PieceRook{Name:name}	
 	default:
 		isEmpty = true
 		piece = PieceEmpty{Name:name}	

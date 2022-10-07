@@ -1,6 +1,5 @@
 package game
 
-
 type Game struct {
 
 	board [8][8]Piece
