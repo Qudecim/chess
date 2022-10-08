@@ -1,3 +1,4 @@
+import game from '../game';
 import res from '../res'
 
 export default {
@@ -31,8 +32,8 @@ export default {
      */
     draw(boxSize, board, cursor, active) {
         this.board(boxSize)
-        this.chessmen(boxSize, board, cursor)
         this.tips(boxSize, board, active)
+        this.chessmen(boxSize, board, cursor)
     },
 
     /**
@@ -86,7 +87,7 @@ export default {
         if (piece.active) {
             this.ctx.fillStyle = this.colors.board.active;
             this.ctx.fillRect(piece.h * boxSize, piece.v * boxSize, boxSize, boxSize);
-            this.ctx.drawImage(res.sprites.chessmen, 213 * piece.sprite(), 213 * piece.color, 213, 213, cursor.x + cursor.ox, cursor.y + cursor.oy, boxSize, boxSize);
+            this.ctx.drawImage(res.sprites.chessmen, 213 * piece.sprite(), 213 * piece.color, 213, 213, cursor.x - (game.block/2), cursor.y - (game.block/2), boxSize, boxSize);
         } else {
             this.ctx.drawImage(res.sprites.chessmen, 213 * piece.sprite(), 213 * piece.color, 213, 213, piece.h * boxSize, piece.v * boxSize, boxSize, boxSize);
         }

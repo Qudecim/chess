@@ -1,6 +1,7 @@
 import room from './room'
 import game from './game'
 import draw from './gui/draw'
+import dom from './gui/dom'
 
 export default {
 
@@ -28,6 +29,10 @@ export default {
         });
         draw.canvas.addEventListener("mousemove", (e) => {
             this.move(e)
+        });
+
+        window.addEventListener("resize", (e) => {
+            dom.resize()
         });
     },
 

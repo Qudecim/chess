@@ -2,12 +2,19 @@
 <html lang="en">
 <head>
     <title>Chat Example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="join" id="join">
         <div class="overlay">
             <div class="container">
                 <div>
+                    <h2>Play</h2>
+                    <label>Room name</label>
+                    <input type="text" id="roomName"/>
+                    <label>Password</label>
                     <input type="text" id="roomName"/>
                     <div class="ctrl">
                         <div class="btn" id="createRoom">Create</div>
@@ -34,6 +41,7 @@
         body {
             margin: 0;
             padding: 0;
+            font-family: 'Roboto', sans-serif;
         }
         .join {
             position: fixed;
@@ -41,19 +49,53 @@
             height: 100%;
         }
         .join .overlay {
-            background: #1e8fff46;
+            background: #2c3a47f5;
             width: 100%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(7px);
         }
         .join .container {
-
-            width: 150px;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px 50px 30px 50px;
+            width: 350px;
         }
         .join input {
-            width:100%;
+            outline: none;
+            display: block;
+            background: rgba(0, 0, 0, 0.1);
+            width: 100%;
+            border: 0;
+            border-radius: 4px;
+            box-sizing: border-box;
+            padding: 12px 20px;
+            color: rgba(0, 0, 0, 0.6);
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: 500;
+            line-height: inherit;
+            transition: 0.3s ease;
+            margin: 0 0 20px 0;
+        }
+        .join h2 {
+            padding: 4px 0;
+            color: #4285F4;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .join label {
+            display: block;
+            margin: 0 0 10px;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
         }
         .join .ctrl {
             display:flex;
@@ -63,13 +105,19 @@
             
         }
         .join .ctrl .btn {
-            margin-top: 5px;
-            display: flex;
-            background: #1e90ff;
-            color: #fff;
-            border-radius: 3px;
-            padding: 5px 0;
-            justify-content:center;
+            margin: 10px 0 0 0;
+            text-align: center;
+            outline: none;
+            background: #4285F4;
+            border: 0;
+            border-radius: 4px;
+            padding: 12px 20px;
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: 500;
+            line-height: inherit;
+            text-transform: uppercase;
             cursor: pointer;
         }
         .board {
@@ -82,13 +130,10 @@
             z-index: -1;
         }
         .board .container {
-            width: 500px;
-            height: 500px;
-            background: #000;
+            
         }
         #canvas {
-            width: 100%;
-            height: 100%;
+            background: #000;
         }
         .wait {
             position: fixed;
@@ -97,14 +142,21 @@
         }
         .wait .overlay {
             position: fixed;
-            width: 100%;
-            height: 100%;
+
             display:flex;
             justify-content: center;
             align-items: center;
-            background-color: #0a131bc2;
+
             color: #fff;
             font-size: 24px;
+
+            background: #2c3a47f5;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(7px);
         }
     </style>
 

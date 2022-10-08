@@ -2,11 +2,13 @@ import { Piece } from './piece'
 import ws from './ws'
 import draw from './gui/draw'
 import ctrl from './ctrl'
+import dom from './gui/dom'
 
 export default {
 
     active: null,
-    block: 50,
+    block: 100,
+    size: 1,
     board: [
         [null,null,null,null,null,null,null,null],
         [null,null,null,null,null,null,null,null],
@@ -77,6 +79,7 @@ export default {
             if (this.board[v][h].color !== this.color) {return}
             this.board[v][h].setActive()
             this.active = { v, h }
+            dom.cursor('grabbing')
         }
     },
 
@@ -119,7 +122,7 @@ export default {
             this.board[this.active.v][this.active.h].setDisactive()
             this.active = null
         }
-
+        dom.cursor('default')
     },
 
     isCheck(color) {
