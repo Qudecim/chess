@@ -33,6 +33,8 @@ export default {
     color: null,
     canMove: false,
 
+
+
     /**
      * Инициализация
      * Перебираем стартовые позиции и создаем объекты фигур
@@ -114,6 +116,7 @@ export default {
                             ws.move(from, to)
                             this.canMove = false
                             this.active = { v, h }
+                            this.board[v][h]
                         }
 
                     }

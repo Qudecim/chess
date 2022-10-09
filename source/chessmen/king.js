@@ -70,6 +70,39 @@ export class King {
                 }
             }
         }
+
+        // Рокировка
+        if (game.isCheck(game.color)) {
+            if (!game.board[v][h].moved) {
+
+                if (!game.board[v][0].moved) {
+                    let havePiece = false
+                    for (let i = h - 1; i > 0; i--) {
+                        if (game.board[v][i] !== null) {
+                            havePiece = true
+                        }
+                    }
+                    if (!havePiece) {
+                        result.push({ v: v, h: h - 2 })
+                    }
+                }
+    
+                if (!game.board[v][7].moved) {
+                    let havePiece = false
+                    for (let i = h + 1; i < 7; i++) {
+                        if (game.board[v][i] !== null) {
+                            havePiece = true
+                        }
+                    }
+                    if (!havePiece) {
+                        result.push({ v: v, h: h + 2 })
+                    }
+                }
+    
+            }
+        }
+
+
         return result;
     }
 

@@ -14,6 +14,7 @@ export class Piece {
     piece = null
     pieceName = ''
     active = false
+    moved = false
 
     constructor(piece, h, v, color) {
         this.h = h
