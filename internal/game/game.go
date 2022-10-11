@@ -40,3 +40,74 @@ func (g *Game) Move(color int, move Move) bool {
 
 	return false
 }
+
+func (g *Game) isCheck(color int) bool {
+
+	// Получить позицию короля
+	var kingPosition Position
+	for v, line := range g.board {
+		for h, piece := range line {
+			if (piece.name == "king") {
+				if (piece.color == color) {
+					kingPosition = Position{H:h, V:v}
+				}
+			}
+		}
+	}
+
+	// Проверяем угражает ли чужая фигура королю
+    // Перебираем все элементы борда
+	for v, line := range g.board {
+		for h, piece := range line {
+			if (!piece.isEmpty) {
+				if (piece.color != color) {
+					positions := piece.GetSteps(g.board, v, h)
+
+					for _,position := range positions {
+						if (position.H == kingPosition.H && position.V == kingPosition.V) {
+							return true
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	return false
+}
+
+// Получить позицию фигуры котоорая угражает нам
+func (g *Game) getCheckPiece(color int) Position {
+
+	// Получить позицию короля
+	var kingPosition Position
+	for v, line := range g.board {
+		for h, piece := range line {
+			if (piece.name == "king") {
+				if (piece.color == color) {
+					kingPosition = Position{H:h, V:v}
+				}
+			}
+		}
+	}
+
+	// Проверяем угражает ли чужая фигура королю
+    // Перебираем все элементы борда
+	for v, line := range g.board {
+		for h, piece := range line {
+			if (!piece.isEmpty) {
+				if (piece.color != color) {
+					positions := piece.GetSteps(g.board, v, h)
+					for _,position := range positions {
+						if (position.H == kingPosition.H && position.V == kingPosition.V) {
+							return position
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return Position{H:0,V:0}
+}
