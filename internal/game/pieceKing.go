@@ -6,7 +6,7 @@ type PieceKing struct {
 	
 }
 
-func (p PieceKing) GetSteps(board [8][8]Piece, color int, v int, h int) []Position {
+func (p PieceKing) GetSteps(board *[8][8]Piece, color int, v int, h int) []Position {
 
 	var positions []Position
 

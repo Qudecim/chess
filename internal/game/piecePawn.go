@@ -7,7 +7,7 @@ type PiecePawn struct {
 	
 }
 
-func (p PiecePawn) GetSteps(board [8][8]Piece, color int, v int, h int) []Position {
+func (p PiecePawn) GetSteps(board *[8][8]Piece, color int, v int, h int) []Position {
 	var positions []Position
 
 	stepLine := v

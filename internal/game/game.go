@@ -28,7 +28,7 @@ func NewGame() Game {
 
 func (g *Game) Move(color int, move Move) bool {
 
-	positions := g.board[move.From.V][move.From.H].GetSteps(g.board, move.From.V, move.From.H)
+	positions := g.board[move.From.V][move.From.H].GetSteps(&g.board, move.From.V, move.From.H)
 
 	for _, position := range positions {
 		if (position.V == move.To.V && position.H == move.To.H) {
@@ -41,10 +41,14 @@ func (g *Game) Move(color int, move Move) bool {
 	return false
 }
 
-func (g *Game) isCheck(board [8][8]Piece,color int) bool {
+func (g *Game) IsCheck(color int) bool {
+	return g.isCheck(&g.board, color)
+}
+
+func (g *Game) isCheck(board *[8][8]Piece, color int) bool {
 
 	// Получить позицию короля
-	kingPosition := g.getKingPosition(color)
+	kingPosition := g.getKingPosition(board, color)
 
 	// Проверяем угражает ли чужая фигура королю
     // Перебираем все элементы борда
@@ -69,10 +73,10 @@ func (g *Game) isCheck(board [8][8]Piece,color int) bool {
 }
 
 // Получить позицию фигуры котоорая угражает нам
-func (g *Game) getCheckPiece(color int) Position {
+func (g *Game) getCheckPiece(board *[8][8]Piece,color int) Position {
 
 	// Получить позицию короля
-	kingPosition := g.getKingPosition(color)
+	kingPosition := g.getKingPosition(board,color)
 
 	// Проверяем угражает ли чужая фигура королю
     // Перебираем все элементы борда
@@ -80,7 +84,7 @@ func (g *Game) getCheckPiece(color int) Position {
 		for h, piece := range line {
 			if (!piece.isEmpty) {
 				if (piece.color != color) {
-					positions := piece.GetSteps(g.board, v, h)
+					positions := piece.GetSteps(board, v, h)
 					for _,position := range positions {
 						if (position.H == kingPosition.H && position.V == kingPosition.V) {
 							return position
@@ -94,9 +98,9 @@ func (g *Game) getCheckPiece(color int) Position {
 	return Position{H:0,V:0}
 }
 
-func (g *Game) getKingPosition(color) Position {
+func (g *Game) getKingPosition(board *[8][8]Piece, color int) Position {
 	var kingPosition Position
-	for v, line := range g.board {
+	for v, line := range board {
 		for h, piece := range line {
 			if (piece.name == "king") {
 				if (piece.color == color) {
@@ -114,22 +118,23 @@ func (g *Game) getKingPosition(color) Position {
 // Если все равно шах, то откатываем его и пробуем дальше
 // Можно оптимизирвать
 // И сначала проверять дает ли шах та фигура которая до этого давала, и только после этого проверять всю доску шах
-func (g *Game) isMate() bool {
+func (g *Game) IsMate(color int) bool {
 
-	board := copy(g.board)
+	 //copy(g.board, "[8][8]Piece")
+	 board := g.board
 
 	for v, line := range g.board {
 		for h, piece := range line {
 			if (!piece.isEmpty) {
 				if (piece.color == color) {
-					positions := piece.GetSteps(g.board, v, h)
+					positions := piece.GetSteps(&g.board, v, h)
 					for _,position := range positions {
 						
 						tmp := board[position.V][position.H]
 						board[position.V][position.H] = board[v][h]
 						board[v][h] = NewPiece(0, "empty")
 
-						if (g.isCheck(board, color)) {
+						if (g.isCheck(&board, color)) {
 							board[v][h] = board[position.V][position.H]
 							board[position.V][position.H] = tmp
 						} else {

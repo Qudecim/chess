@@ -72,11 +72,28 @@ func run(message []byte, c *Client) {
 				c.room.canMove = 0
 			}
 			
-			fmt.Println("before start move")
 			isMove := c.room.game.Move(color, move,)
 
 			if (isMove) {
 				fmt.Println("Possible move")
+
+				enemyColor := 0
+				if (color == 0) {
+					enemyColor = 1
+				}
+
+				isCheck := c.room.game.IsCheck(enemyColor)
+				if (isCheck) {
+					isMate := c.room.game.IsMate(enemyColor)
+					if (isMate) {
+						// END game
+						// Send ws about end game
+						fmt.Println("It is end")
+						return
+					}
+				}
+				// Нужно добавить в отправку шах ли это (не обязательно)
+				
 				if (color == 0) {
 					c.room.black.send <- message
 				} else {

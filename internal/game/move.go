@@ -19,7 +19,7 @@ func pm(v int, h int) PieceMove {
 	return PieceMove{v:v, h:h, end:false}
 }
 
-func getSteps(board [8][8]Piece, color int, v int, h int, pms []PieceMove, once bool) []Position {
+func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once bool) []Position {
 	var positions []Position
 
 	steps := 8

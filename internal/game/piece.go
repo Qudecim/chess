@@ -1,7 +1,7 @@
 package game
 
 type PieceItem interface {
-	GetSteps(board [8][8]Piece, color int, v int, h int) []Position
+	GetSteps(board *[8][8]Piece, color int, v int, h int) []Position
 }
 
 type Piece struct {
@@ -11,7 +11,7 @@ type Piece struct {
 	isEmpty bool
 }
 
-func (p Piece) GetSteps(board [8][8]Piece, v int, h int) []Position {
+func (p Piece) GetSteps(board *[8][8]Piece, v int, h int) []Position {
 	return p.item.GetSteps(board, p.color, v, h)
 }
 
