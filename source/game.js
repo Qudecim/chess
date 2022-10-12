@@ -102,25 +102,32 @@ export default {
         if (this.active) {
             if (this.board[this.active.v][this.active.h] !== null) {
                 let steps = this.board[this.active.v][this.active.h].getSteps()
+
+                let isCanMove = false
                 for (let step of steps) {
                     if (step.h === h && step.v === v) {
-                        let oldPieceOnBox = this.board[v][h]
-                        this.board[this.active.v][this.active.h].go(h, v)
-                        if (this.isCheck(this.color)) {
-                            // roll back
-                            this.board[v][h].go(this.active.h, this.active.v)
-                            this.board[v][h] = oldPieceOnBox
-                        } else {
-                            let from = { h: this.active.h, v: this.active.v }
-                            let to = { h, v }
-                            ws.move(from, to)
-                            this.canMove = false
-                            this.active = { v, h }
-                            this.board[v][h]
-                        }
-
+                        isCanMove = true
                     }
                 }
+
+                if (isCanMove) {
+                    let oldPieceOnBox = this.board[v][h]
+                    this.board[this.active.v][this.active.h].go(h, v)
+                    console.log('MOVE');
+                    if (this.isCheck(this.color)) {
+                        // roll back
+                        this.board[v][h].go(this.active.h, this.active.v)
+                        this.board[v][h] = oldPieceOnBox
+                    } else {
+                        let from = { h: this.active.h, v: this.active.v }
+                        let to = { h, v }
+                        ws.move(from, to)
+                        this.canMove = false
+                        this.active = { v, h }
+                        this.board[v][h]
+                    }
+                }
+
             }
             this.board[this.active.v][this.active.h].setDisactive()
             this.active = null
@@ -129,6 +136,8 @@ export default {
     },
 
     isCheck(color) {
+        let l = 0;
+        console.log(l);
         // получаем позицию короля
         // TODO: лучше хранить данные по корлю в переменной
         let kingPosition = null
@@ -144,12 +153,14 @@ export default {
         // Проверяем угражает ли чужая фигура королю
         // Перебираем все элементы борда
         for (let v = 0; v < 8; v++) {
-            for (let h = 0; h < 8; h++) {
+            for (let h = 0; h < 7; h++) {
                 // Если не нулл
                 if (this.board[v][h] !== null) {
                     let piece = this.board[v][h]
                     // Если фигура другого цвета
                     if (piece.color !== color) {
+                        l++;
+                        console.log(l);
                         let steps = piece.getSteps()
                         // Перебераем все возможные ходы, и смотрим не там ли король
                         for (let i = 0; i < steps.length; i++) {
