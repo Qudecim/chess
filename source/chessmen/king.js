@@ -72,7 +72,8 @@ export class King {
         }
 
         // Рокировка
-        if (game.isCheck(game.color)) {
+        // game.isCheck(game.color)
+        if (false) {
             if (!game.board[v][h].moved) {
 
                 if (!game.board[v][0].moved) {
