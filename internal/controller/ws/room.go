@@ -34,19 +34,19 @@ func newRoom(name []byte, c *Client) *Room {
 
 func (r *Room) Start() {
 
-	data_white := StartGame{Action:"start", Color:0}
+	startGameWhite := StartGame{Color: 0}
+	data_white := Response{Action:"start", StartGame:startGameWhite}
 	json_white, _ := json.Marshal(data_white)
 	r.white.send <- json_white
 
-	data_black := StartGame{Action:"start", Color:1}
+	startGameBlack := StartGame{Color: 1}
+	data_black := Response{Action:"start", StartGame:startGameBlack}
 	json_black, _ := json.Marshal(data_black)
 	r.black.send <- json_black
 
 }
 
 type StartGame struct {
-
-	Action string `json:"action"`
 
 	Color int `json:"color"`
 

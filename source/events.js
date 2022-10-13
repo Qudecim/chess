@@ -10,7 +10,10 @@ export default {
                 this.move(data.move.from, data.move.to)
                 break;
             case 'start':
-                this.start(data.color)
+                this.start(data.start_game.color)
+                break;
+            case 'end':
+                this.end(data.you_win)
                 break;
             default:
                 console.error('Event didnt find')
@@ -26,7 +29,12 @@ export default {
 
     // Конец игры
     end(isWin) {
-
+        if (isWin) {
+            window.alert("You won");
+        } else {
+            window.alert("You lose");
+        }
+        
     },
 
     // Ход противника

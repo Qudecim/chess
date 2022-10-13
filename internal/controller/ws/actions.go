@@ -21,6 +21,16 @@ type Request struct {
 
 }
 
+type Response struct {
+
+	Action string  `json:"action"`
+
+	YouWin bool `json:"you_win"`
+
+	StartGame StartGame `json:"start_game"`
+
+}
+
 type ActionRoom struct {
 	
 	Room_name string `json:"room_name"`
@@ -86,9 +96,22 @@ func run(message []byte, c *Client) {
 				if (isCheck) {
 					isMate := c.room.game.IsMate(enemyColor)
 					if (isMate) {
-						// END game
-						// Send ws about end game
-						fmt.Println("It is end")
+						whiteWin := false
+						if (color == 0) {
+							whiteWin = true
+						}
+						responseWhite := Response{Action:"end",YouWin:whiteWin}
+						json_white, _ := json.Marshal(responseWhite)
+						c.room.white.send <- json_white
+
+						blackWin := false
+						if (color == 0) {
+							blackWin = true
+						}
+						responseBlack := Response{Action:"end",YouWin:blackWin}
+						json_black, _ := json.Marshal(responseBlack)
+						c.room.black.send <- json_black
+
 						return
 					}
 				}
