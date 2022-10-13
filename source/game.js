@@ -9,6 +9,7 @@ export default {
     active: null,
     block: 100,
     size: 1,
+    tips: [],
     board: [
         [null,null,null,null,null,null,null,null],
         [null,null,null,null,null,null,null,null],
@@ -56,7 +57,7 @@ export default {
      * Функция вызывается по таймеру, используется для отрисовки
      */
     tic() {
-        draw.draw(this.block, this.board, ctrl.cursor, this.active)
+        draw.draw(this.block, this.board, ctrl.cursor, this.active, this.tips)
     },
 
     /**
@@ -67,9 +68,7 @@ export default {
      * Проверяем нашего ли она цвета
      * Делаем эту фигуру активной
      * 
-     * TODO: Имеет смысл получить возможные ходы здесь, 
-     * для использования отрисовки подсказок, и проверки в move.
-     * Соотвественно они уже должны быть проверены на шах
+     * TODO: Нужна проверка подсказок на шах
      * 
      * @param {*} v 
      * @param {*} h 
@@ -80,6 +79,7 @@ export default {
         if (this.board[v][h] !== null) {
             if (this.board[v][h].color !== this.color) {return}
             this.board[v][h].setActive()
+            this.tips = this.board[v][h].getSteps()
             this.active = { v, h }
             dom.cursor('grabbing')
         }

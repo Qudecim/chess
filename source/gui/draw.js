@@ -29,10 +29,11 @@ export default {
      * @param {any} board
      * @param {any} cursor
      * @param {any} active
+     * @param {any} tips
      */
-    draw(boxSize, board, cursor, active) {
+    draw(boxSize, board, cursor, active, tips) {
         this.board(boxSize)
-        this.tips(boxSize, board, active)
+        this.tips(boxSize, tips, active)
         this.chessmen(boxSize, board, cursor)
     },
 
@@ -97,16 +98,15 @@ export default {
      * Отрисовка подсказок
      * 
      * @param {any} boxSize
-     * @param {any} board
+     * @param {any} tips
      * @param {any} active
      */
-    tips(boxSize, board, active) {
+    tips(boxSize, tips, active) {
         if (active !== null) {
-            let steps = board[active.v][active.h].getSteps()
-            for (let i = 0; i < steps.length; i++) {
+            for (let i = 0; i < tips.length; i++) {
                 this.ctx.fillStyle = this.colors.board.tip;
                 this.ctx.globalAlpha = 0.7;
-                this.ctx.fillRect(steps[i].h * boxSize, steps[i].v * boxSize, boxSize, boxSize);
+                this.ctx.fillRect(tips[i].h * boxSize, tips[i].v * boxSize, boxSize, boxSize);
                 this.ctx.globalAlpha = 1;
             }
         }

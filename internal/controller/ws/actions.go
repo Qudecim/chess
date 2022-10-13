@@ -105,7 +105,7 @@ func run(message []byte, c *Client) {
 						c.room.white.send <- json_white
 
 						blackWin := false
-						if (color == 0) {
+						if (color == 1) {
 							blackWin = true
 						}
 						responseBlack := Response{Action:"end",YouWin:blackWin}
