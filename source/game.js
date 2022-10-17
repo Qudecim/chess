@@ -79,7 +79,8 @@ export default {
         if (this.board[v][h] !== null) {
             if (this.board[v][h].color !== this.color) {return}
             this.board[v][h].setActive()
-            this.tips = this.board[v][h].getSteps()
+            let isCheck = this.isCheck(this.color)
+            this.tips = this.board[v][h].getSteps(isCheck)
             this.active = { v, h }
             dom.cursor('grabbing')
         }
@@ -101,7 +102,8 @@ export default {
     move(v, h) {
         if (this.active) {
             if (this.board[this.active.v][this.active.h] !== null) {
-                let steps = this.board[this.active.v][this.active.h].getSteps()
+                let isCheck = this.isCheck(this.color)
+                let steps = this.board[this.active.v][this.active.h].getSteps(isCheck)
 
                 let isCanMove = false
                 for (let step of steps) {
@@ -161,7 +163,7 @@ export default {
                     if (piece.color !== color) {
                         l++;
                         console.log(l);
-                        let steps = piece.getSteps()
+                        let steps = piece.getSteps(false)
                         // Перебераем все возможные ходы, и смотрим не там ли король
                         for (let i = 0; i < steps.length; i++) {
                             if (steps[i].h === kingPosition.h && steps[i].v === kingPosition.v) {

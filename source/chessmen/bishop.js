@@ -4,7 +4,7 @@ export class Bishop {
     
     sprite = 2
 
-    getSteps(color, v, h) {
+    getSteps(color, v, h, isCheck) {
         let result = []
         let steps = [
             {

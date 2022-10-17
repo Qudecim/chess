@@ -4,7 +4,7 @@ export class King {
 
     sprite = 0
 
-    getSteps(color, v, h) {
+    getSteps(color, v, h, isCheck) {
         let result = []
         let steps = [
             {
@@ -73,7 +73,7 @@ export class King {
 
         // Рокировка
         // game.isCheck(game.color)
-        if (false) {
+        if (!isCheck) {
             if (!game.board[v][h].moved) {
 
                 if (!game.board[v][0].moved) {

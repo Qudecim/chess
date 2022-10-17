@@ -57,8 +57,8 @@ export class Piece {
         this.active = false
     }
 
-    getSteps() {
-        return this.piece.getSteps(this.color, this.v, this.h)
+    getSteps(isCheck) {
+        return this.piece.getSteps(this.color, this.v, this.h, isCheck)
     }
 
     go(h, v) {

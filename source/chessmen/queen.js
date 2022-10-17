@@ -4,7 +4,7 @@ export class Queen {
 
     sprite = 1
 
-    getSteps(color, v, h) {
+    getSteps(color, v, h, isCheck) {
         let result = []
         let steps = [
             {

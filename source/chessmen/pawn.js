@@ -4,7 +4,7 @@ export class Pawn {
 
     sprite = 5
 
-    getSteps(color, v, h) {
+    getSteps(color, v, h, isCheck) {
         let steps = [];
         let step_line = (color ? 1 : -1) + v
 

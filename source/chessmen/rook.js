@@ -4,7 +4,7 @@ export class Rook {
 
     sprite = 4
 
-    getSteps(color, v, h) {
+    getSteps(color, v, h, isCheck) {
         let result = []
         let steps = [
             {
