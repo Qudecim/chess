@@ -96,8 +96,6 @@ export default {
      * Меняем флаг canMove на ложь, поскольку теперь мы ждем хода противника
      * Дизактивируем активную фигуру
      * 
-     * TODO: отправлять о рокировке при шаге
-     * 
      * @param {*} v 
      * @param {*} h 
      */
@@ -149,7 +147,7 @@ export default {
                     } else {
                         let from = { h: this.active.h, v: this.active.v }
                         let to = { h, v }
-                        ws.move(from, to)
+                        ws.move(from, to, isCastling)
                         this.canMove = false
                         this.active = { v, h }
                         this.board[v][h]

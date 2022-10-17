@@ -27,8 +27,8 @@ export default {
         this.send('create_room', { 'join_room': {'room_name': name} })
     },
 
-    move(from, to) {
-        this.send('move', {'move':{ from, to }})
+    move(from, to, isCastling) {
+        this.send('move', {'move':{ from, to, isCastling }})
     },
 
     send(method, data) {
