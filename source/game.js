@@ -96,6 +96,8 @@ export default {
      * Меняем флаг canMove на ложь, поскольку теперь мы ждем хода противника
      * Дизактивируем активную фигуру
      * 
+     * TODO: отправлять о рокировке при шаге
+     * 
      * @param {*} v 
      * @param {*} h 
      */
@@ -115,11 +117,35 @@ export default {
                 if (isCanMove) {
                     let oldPieceOnBox = this.board[v][h]
                     this.board[this.active.v][this.active.h].go(h, v)
+
+                    // exception for castling
+                    let isCastling = false
+                    let isCastlingLeft = false
+                    if (this.board[v][h].pieceName == 'king') {
+                        if (Math.abs(h - this.active.h) > 1) {
+                            if (h > this.active.h) {  // 
+                                this.board[this.active.v][7].go(h - 1, v)
+                            } else {
+                                this.board[this.active.v][0].go(h + 1, v)
+                                isCastlingLeft = true
+                            }
+                            isCastling = true
+                        }
+                    }
+
                     console.log('MOVE');
                     if (this.isCheck(this.color)) {
                         // roll back
                         this.board[v][h].go(this.active.h, this.active.v)
                         this.board[v][h] = oldPieceOnBox
+
+                        if (isCastling) {
+                            if (isCastlingLeft) {
+                                this.board[v][h+1].go(0, this.active.v)
+                            } else {
+                                this.board[v][h-1].go(7, this.active.v)
+                            }
+                        }
                     } else {
                         let from = { h: this.active.h, v: this.active.v }
                         let to = { h, v }
