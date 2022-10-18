@@ -39,8 +39,8 @@ func (g *Game) Move(color int, move Move) bool {
 			g.board[move.To.V][move.To.H].moved = true
 
 			// Exception for castling
-			if (g.board[move.To.V][move.To.H].item.Name == "king") {
-				if (math.Abs(move.To.H - move.From.H) > 1) {
+			if (g.board[move.To.V][move.To.H].getName() == "king") {
+				if (math.Abs(float64(move.To.H - move.From.H)) > 1) {
 					if (move.To.H > move.From.H) {
 						g.board[move.To.V][7].moved = true
 						g.board[move.To.V][move.To.H - 1] = g.board[move.From.V][7]
@@ -52,7 +52,7 @@ func (g *Game) Move(color int, move Move) bool {
 					}
 				}
 			}
-			
+
 			return true
 		}
 	}

@@ -17,3 +17,7 @@ func (p PieceQueen) GetSteps(board *[8][8]Piece, color int, v int, h int) []Posi
 	return positions
 
 }
+
+func (p PieceQueen) GetName() string {
+	return p.Name
+}

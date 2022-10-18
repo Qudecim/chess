@@ -2,6 +2,7 @@ package game
 
 type PieceItem interface {
 	GetSteps(board *[8][8]Piece, color int, v int, h int) []Position
+	GetName() string
 }
 
 type Piece struct {
@@ -14,6 +15,10 @@ type Piece struct {
 
 func (p Piece) GetSteps(board *[8][8]Piece, v int, h int) []Position {
 	return p.item.GetSteps(board, p.color, v, h)
+}
+
+func (p Piece) getName() string {
+	return p.item.GetName()
 }
 
 func NewPiece(color int, name string) Piece {

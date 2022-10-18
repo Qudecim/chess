@@ -68,8 +68,8 @@ func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once
 
 			if (!board[v][0].moved) {
 				havePiece := false
-				for i := h - 1; i > 0; i++ {
-					if (!game.board[v][i].isEmpty) {
+				for i := h - 1; i > 0; i-- {
+					if (!board[v][i].isEmpty) {
 						havePiece = true
 					}
 				}
@@ -81,7 +81,7 @@ func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once
 			if (!board[v][7].moved) {
 				havePiece := false
 				for i := h + 1; i > 7; i++ {
-					if (!game.board[v][i].isEmpty) {
+					if (!board[v][i].isEmpty) {
 						havePiece = true
 					}
 				}

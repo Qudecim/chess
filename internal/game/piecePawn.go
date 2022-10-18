@@ -57,3 +57,7 @@ func (p PiecePawn) GetSteps(board *[8][8]Piece, color int, v int, h int) []Posit
 	return positions
 
 }
+
+func (p PiecePawn) GetName() string {
+	return p.Name
+}
