@@ -12,7 +12,7 @@ func (p PieceBishop) GetSteps(board *[8][8]Piece, color int, v int, h int) []Pos
 
 	pieceMoves := []PieceMove{pm(1,1),pm(-1,-1),pm(1,-1),pm(-1,1)}
 
-	positions = getSteps(board, color, v, h, pieceMoves, false)
+	positions = getSteps(board, color, v, h, pieceMoves, false, p.Name)
 	
 	return positions
 

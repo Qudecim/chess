@@ -9,6 +9,7 @@ type Piece struct {
 	name string
 	item PieceItem
 	isEmpty bool
+	moved bool
 }
 
 func (p Piece) GetSteps(board *[8][8]Piece, v int, h int) []Position {
@@ -39,6 +40,6 @@ func NewPiece(color int, name string) Piece {
 		piece = PieceEmpty{Name:name}	
 	}
 
-	return Piece{color:color, name:name, item:piece, isEmpty:isEmpty}
+	return Piece{color:color, name:name, item:piece, isEmpty:isEmpty, moved:false}
 }
 

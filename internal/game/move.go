@@ -19,7 +19,7 @@ func pm(v int, h int) PieceMove {
 	return PieceMove{v:v, h:h, end:false}
 }
 
-func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once bool) []Position {
+func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once bool, pieceName string) []Position {
 	var positions []Position
 
 	steps := 8
@@ -59,6 +59,37 @@ func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once
 
 		}
 
+	}
+
+	// TODO: здесь мы должны еще проверить не находится ли король под шахом
+	// Но пока это лень делать
+	if (pieceName == "king") {
+		if (!board[v][h].moved) {
+
+			if (!board[v][0].moved) {
+				havePiece := false
+				for i := h - 1; i > 0; i++ {
+					if (!game.board[v][i].isEmpty) {
+						havePiece = true
+					}
+				}
+				if (!havePiece) {
+					positions = append(positions, Position{V:v, H:h - 2})
+				}
+			}
+
+			if (!board[v][7].moved) {
+				havePiece := false
+				for i := h + 1; i > 7; i++ {
+					if (!game.board[v][i].isEmpty) {
+						havePiece = true
+					}
+				}
+				if (!havePiece) {
+					positions = append(positions, Position{V:v, H:h + 2})
+				}
+			}
+		}
 	}
 
 
