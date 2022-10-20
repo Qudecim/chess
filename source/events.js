@@ -41,6 +41,17 @@ export default {
     move(from, to) {
         game.board[from.v][from.h].go(to.h, to.v)
         game.canMove = true
+
+        // exception for castling
+        if (game.board[to.v][to.h].pieceName == 'king') {
+            if (Math.abs(to.h - from.h) > 1) {
+                if (to.h > from.h) {  // 
+                    game.board[from.v][7].go(to.h - 1, to.v)
+                } else {
+                    game.board[from.v][0].go(to.h + 1, to.v)
+                }
+            }
+        }
     },
 
 }

@@ -77,6 +77,7 @@ export default {
     select(v, h) {
         if (!this.canMove) {return}        
         if (this.board[v][h] !== null) {
+            console.log(this.board[v][h])
             if (this.board[v][h].color !== this.color) {return}
             this.board[v][h].setActive()
             let isCheck = this.isCheck(this.color)
@@ -131,7 +132,7 @@ export default {
                         }
                     }
 
-                    console.log('MOVE');
+
                     if (this.isCheck(this.color)) {
                         // roll back
                         this.board[v][h].go(this.active.h, this.active.v)
@@ -148,9 +149,10 @@ export default {
                         let from = { h: this.active.h, v: this.active.v }
                         let to = { h, v }
                         ws.move(from, to, isCastling)
+                        
                         this.canMove = false
                         this.active = { v, h }
-                        this.board[v][h]
+                        this.board[v][h].moved = true
                     }
                 }
 
@@ -163,7 +165,7 @@ export default {
 
     isCheck(color) {
         let l = 0;
-        console.log(l);
+
         // получаем позицию короля
         // TODO: лучше хранить данные по корлю в переменной
         let kingPosition = null
@@ -186,7 +188,7 @@ export default {
                     // Если фигура другого цвета
                     if (piece.color !== color) {
                         l++;
-                        console.log(l);
+
                         let steps = piece.getSteps(false)
                         // Перебераем все возможные ходы, и смотрим не там ли король
                         for (let i = 0; i < steps.length; i++) {

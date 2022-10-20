@@ -21,6 +21,12 @@ func (p Piece) getName() string {
 	return p.item.GetName()
 }
 
+func (p Piece) Go(board *[8][8]Piece, fromV int, fromH int, toV int, toH int) {
+	board[fromV][fromH].moved = true
+	board[toV][toH] = board[fromV][fromH]
+	board[fromV][fromH] = NewPiece(0, "empty")
+}
+
 func NewPiece(color int, name string) Piece {
 
 	var piece PieceItem

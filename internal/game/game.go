@@ -34,21 +34,15 @@ func (g *Game) Move(color int, move Move) bool {
 
 	for _, position := range positions {
 		if (position.V == move.To.V && position.H == move.To.H) {
-			g.board[move.To.V][move.To.H] = g.board[move.From.V][move.From.H]
-			g.board[move.From.V][move.From.H] = NewPiece(0, "empty")
-			g.board[move.To.V][move.To.H].moved = true
+			g.board[move.To.V][move.To.H].Go(&g.board, move.From.V, move.From.H, move.To.V, move.To.H)
 
 			// Exception for castling
 			if (g.board[move.To.V][move.To.H].getName() == "king") {
 				if (math.Abs(float64(move.To.H - move.From.H)) > 1) {
 					if (move.To.H > move.From.H) {
-						g.board[move.To.V][7].moved = true
-						g.board[move.To.V][move.To.H - 1] = g.board[move.From.V][7]
-						g.board[move.From.V][7] = NewPiece(0, "empty")
+						g.board[move.To.V][move.To.H - 1].Go(&g.board, move.From.V, 7, move.To.V, move.To.H - 1)
 					} else {
-						g.board[move.To.V][0].moved = true
-						g.board[move.To.V][move.To.H + 1] = g.board[move.From.V][0]
-						g.board[move.From.V][0] = NewPiece(0, "empty")
+						g.board[move.To.V][move.To.H + 1].Go(&g.board, move.From.V, 0, move.To.V, move.To.H + 1)
 					}
 				}
 			}
