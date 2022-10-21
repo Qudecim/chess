@@ -39,19 +39,16 @@
         <div class="overlay">
             <div class="container">
                 <div class="chessmen black">
-                    <div class="piece king">
+                    <div class="piece queen" id="choose_queen">
                         <img src="sprites.png">
                     </div>
-                    <div class="piece queen">
+                    <div class="piece bishop" id="choose_bishop">
                         <img src="sprites.png">
                     </div>
-                    <div class="piece bishop">
+                    <div class="piece knight" id="choose_knight">
                         <img src="sprites.png">
                     </div>
-                    <div class="piece knight">
-                        <img src="sprites.png">
-                    </div>
-                    <div class="piece rook">
+                    <div class="piece rook" id="choose_rook">
                         <img src="sprites.png">
                     </div>
                 </div>
@@ -216,9 +213,6 @@
         }
         .choose img {
             height: 200%;
-        }
-        .choose .king img {
-            margin-left: 0;
         }
         .choose .queen img {
             margin-left: -106px;

@@ -31,6 +31,22 @@ export default {
             this.move(e)
         });
 
+        document.getElementById('choose_queen').addEventListener('click', (event) => {
+            dom.choosePiece('queen')
+        })
+
+        document.getElementById('choose_bishop').addEventListener('click', (event) => {
+            dom.choosePiece('bishop')
+        })
+
+        document.getElementById('choose_knight').addEventListener('click', (event) => {
+            dom.choosePiece('knight')
+        })
+
+        document.getElementById('choose_rook').addEventListener('click', (event) => {
+            dom.choosePiece('rook')
+        })
+
         window.addEventListener("resize", (e) => {
             dom.resize()
         });

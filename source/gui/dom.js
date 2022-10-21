@@ -9,7 +9,6 @@ export default {
         } else {
             document.getElementById('join').style.display = 'none'
         }
-        
     },
 
     wait(show) {
@@ -32,6 +31,18 @@ export default {
         draw.canvas.height = w
 
         game.block = w / 8
+    },
+
+    showChoose(show) {
+        if (show) {
+            document.getElementById('choose').style.display = 'block'
+        } else {
+            document.getElementById('choose').style.display = 'none'
+        }
+    },
+
+    choosePiece(pieceName) {
+        console.log(pieceName)
     }
 
 }
