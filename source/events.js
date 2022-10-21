@@ -13,7 +13,7 @@ export default {
                 this.start(data.start_game.color)
                 break;
             case 'end':
-                this.end(data.you_win)
+                this.end(data.end)
                 break;
             default:
                 console.error('Event didnt find')
@@ -28,13 +28,16 @@ export default {
     },
 
     // Конец игры
-    end(isWin) {
-        if (isWin) {
+    end(end) {
+        if (end == 1) {
             window.alert("You won");
-        } else {
+        }
+        if (end == 2) {
+            window.alert("Draw");
+        }
+        if (end == 3) {
             window.alert("You lose");
         }
-        
     },
 
     // Ход противника

@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="join" id="join">
+    <div class="join" id="join" style="display: none;">
         <div class="overlay">
             <div class="container">
                 <div>
@@ -33,6 +33,30 @@
 
     <div class="wait" id="wait" style="display: none;">
         <div class="overlay">Wait...</div>
+    </div>
+
+    <div class="choose" id="choose">
+        <div class="overlay">
+            <div class="container">
+                <div class="chessmen black">
+                    <div class="piece king">
+                        <img src="sprites.png">
+                    </div>
+                    <div class="piece queen">
+                        <img src="sprites.png">
+                    </div>
+                    <div class="piece bishop">
+                        <img src="sprites.png">
+                    </div>
+                    <div class="piece knight">
+                        <img src="sprites.png">
+                    </div>
+                    <div class="piece rook">
+                        <img src="sprites.png">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="main.js"></script>
@@ -154,6 +178,65 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(7px);
+        }
+
+        .choose {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+        .choose .overlay {
+            background: #2c3a47f5;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(7px);
+        }
+        .choose .container {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px 50px 30px 50px;
+        }
+        .choose .chessmen {
+            display: flex;
+            justify-content: center;
+        }
+        .choose .piece {
+            height: 106px;
+            width: 106px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid #fff;
+        }
+        .choose .piece:hover {
+            border: 1px solid #cecfcff5;
+            border-radius: 3px;
+        }
+        .choose img {
+            height: 200%;
+        }
+        .choose .king img {
+            margin-left: 0;
+        }
+        .choose .queen img {
+            margin-left: -106px;
+        }
+        .choose .bishop img {
+            margin-left: -213px;
+        }
+        .choose .knight img {
+            margin-left: -319px;
+        }
+        .choose .rook img {
+            margin-left: -426px;
+        }
+        .choose .white img {
+            margin-top: 0;
+        }
+        .choose .black img {
+            margin-top: -106px;
         }
     </style>
 
