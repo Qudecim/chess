@@ -37,13 +37,13 @@ export class Rook {
                     if (n_h > 7 || n_h < 0) { continue }
                     if (n_v > 7 || n_v < 0) { continue }
                     if (game.board[n_v][n_h] === null) {
-                        result.push({ v: n_v, h: n_h })
+                        result.push({ v: n_v, h: n_h, pawnPass: false })
                     } else {
                         if (game.board[n_v][n_h] === undefined) {
                             continue;
                         }
                         if (game.board[n_v][n_h].color !== color) {
-                            result.push({ v: n_v, h: n_h })
+                            result.push({ v: n_v, h: n_h, pawnPass: false })
                         }
                         step.a = false
                     }

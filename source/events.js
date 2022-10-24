@@ -46,8 +46,6 @@ export default {
         game.board[from.v][from.h].go(to.h, to.v)
         game.canMove = true
 
-        game.lastMove = {from, to}
-
         // exception for castling
         if (game.board[to.v][to.h].pieceName == 'king') {
             if (Math.abs(to.h - from.h) > 1) {
@@ -66,7 +64,25 @@ export default {
                     game.board[to.v][to.h] = new Piece(selectPiece, to.h, to.v, game.color? 0 : 1)
                 }
             }
+
+            if (game.board[game.lastMove.to.v][game.lastMove.to.h].pieceName == 'pawn') {
+                if (Math.abs(game.lastMove.to.v - game.lastMove.from.v) == 2) {
+                    if (game.lastMove.to.h == to.h) {
+                        if (game.color) {
+                            if (to.v == 2) {
+                                game.board[game.lastMove.to.v][game.lastMove.to.h] = null
+                            }
+                        } else {
+                            if (to.v == 5) {
+                                game.board[game.lastMove.to.v][game.lastMove.to.h] = null
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        game.lastMove = {from, to}
 
     },
 

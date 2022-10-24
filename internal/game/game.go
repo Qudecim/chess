@@ -43,8 +43,6 @@ func (g *Game) Move(color int, move Move) bool {
 		if (position.V == move.To.V && position.H == move.To.H) {
 			g.board[move.To.V][move.To.H].Go(&g.board, move.From.V, move.From.H, move.To.V, move.To.H)
 			g.lastMove = move
-			fmt.Println("Game.Move.Main:")
-			fmt.Println(position)
 
 			if (position.PawnPass) {
 				if (color == 0) {

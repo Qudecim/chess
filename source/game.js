@@ -116,9 +116,11 @@ export default {
                 let steps = this.board[this.active.v][this.active.h].getSteps(isCheck)
 
                 let isCanMove = false
+                let isPawnPass = false
                 for (let step of steps) {
                     if (step.h === h && step.v === v) {
                         isCanMove = true
+                        isPawnPass = step.pawnPass
                     }
                 }
 
@@ -171,15 +173,20 @@ export default {
                         let from = { h: this.active.h, v: this.active.v }
                         let to = { h, v }
                         ws.move(from, to, selectPiece)
-                        
+
+                        this.lastMove = {from, to}
                         this.canMove = false
                         this.active = { v, h }
                         this.board[v][h].moved = true
 
                         if (selectPiece != '') {
-                            this.board[v][h] = this.board[to.v][to.h] = new Piece(selectPiece, h, v, this.color)
+                            this.board[to.v][to.h] = new Piece(selectPiece, h, v, this.color)
                         }
                         
+                        if (isPawnPass) {
+                            let ov = this.color ? -1 : 1
+                            this.board[to.v + ov][to.h] = null
+                        }
                     }
                 }
 

@@ -11,7 +11,7 @@ export class Pawn {
         if (color === 0) {
             if (v === 6) {
                 if (game.board[step_line - 1][h] === null) {
-                    steps.push({ v: step_line - 1, h: h })
+                    steps.push({ v: step_line - 1, h: h, pawnPass: false })
                 }
             }
         }
@@ -19,13 +19,13 @@ export class Pawn {
         if (color === 1) {
             if (v === 1) {
                 if (game.board[step_line + 1][h] === null) {
-                    steps.push({ v: step_line + 1, h: h })
+                    steps.push({ v: step_line + 1, h: h, pawnPass: false })
                 }
             }
         }
 
         if (game.board[step_line][h] === null) {
-            steps.push({ v: step_line, h: h })
+            steps.push({ v: step_line, h: h, pawnPass: false })
         }
 
         for (let step of [-1, +1]) {
@@ -35,7 +35,7 @@ export class Pawn {
             }
 
             if (game.board[step_line][h_position] !== null && game.board[step_line][h_position].color !== color) {
-                steps.push({ v: step_line, h: h_position })
+                steps.push({ v: step_line, h: h_position, pawnPass: false })
             }
         }
 
@@ -46,10 +46,10 @@ export class Pawn {
                 if (color == 0) {
                     if (v == 3) {
                         if (h - 1 == game.lastMove.to.h) {
-                            steps.push({ v: 2, h: h - 1 })
+                            steps.push({ v: 2, h: h - 1, pawnPass: true })
                         }
                         if (h + 1 == game.lastMove.to.h) {
-                            steps.push({ v: 2, h: h + 1 })
+                            steps.push({ v: 2, h: h + 1, pawnPass: true})
                         }
                     }
                 }
@@ -59,10 +59,10 @@ export class Pawn {
                 if (color == 1) {
                     if (v == 4) {
                         if (h - 1 == game.lastMove.to.h) {
-                            steps.push({ v: 5, h: h - 1 })
+                            steps.push({ v: 5, h: h - 1, pawnPass: true })
                         }
                         if (h + 1 == game.lastMove.to.h) {
-                            steps.push({ v: 5, h: h + 1 })
+                            steps.push({ v: 5, h: h + 1, pawnPass: true })
                         }
                     }
                 }
