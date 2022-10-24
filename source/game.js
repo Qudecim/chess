@@ -33,6 +33,10 @@ export default {
     ],
     color: null,
     canMove: false,
+    moveBeforeChoose: {
+        h: 0,
+        v: 0
+    },
 
 
 
@@ -99,8 +103,9 @@ export default {
      * 
      * @param {*} v 
      * @param {*} h 
+     * @param {*} selectPiece // используется только при смене пешки на другую фигуру
      */
-    move(v, h) {
+    move(v, h, selectPiece = '') {
         if (this.active) {
             if (this.board[this.active.v][this.active.h] !== null) {
                 let isCheck = this.isCheck(this.color)
@@ -114,6 +119,18 @@ export default {
                 }
 
                 if (isCanMove) {
+
+                    // Pawn change to another piece
+                    if (selectPiece == '') {
+                        if (this.board[this.active.v][this.active.h].pieceName == 'pawn') {
+                            if (v == 0 || v == 7) {
+                                this.moveBeforeChoose = {v, h}
+                                dom.showChoose(true)
+                                return;
+                            }
+                        }
+                    }
+
                     let oldPieceOnBox = this.board[v][h]
                     this.board[this.active.v][this.active.h].go(h, v)
 
@@ -146,13 +163,19 @@ export default {
                             }
                         }
                     } else {
+
                         let from = { h: this.active.h, v: this.active.v }
                         let to = { h, v }
-                        ws.move(from, to, isCastling)
+                        ws.move(from, to, selectPiece)
                         
                         this.canMove = false
                         this.active = { v, h }
                         this.board[v][h].moved = true
+
+                        if (selectPiece != '') {
+                            this.board[v][h] = this.board[to.v][to.h] = new Piece(selectPiece, h, v, this.color)
+                        }
+                        
                     }
                 }
 

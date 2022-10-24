@@ -42,7 +42,8 @@ export default {
     },
 
     choosePiece(pieceName) {
-        console.log(pieceName)
+        this.showChoose(false)
+        game.move(game.moveBeforeChoose.v, game.moveBeforeChoose.h, pieceName)
     }
 
 }

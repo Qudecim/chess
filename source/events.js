@@ -1,5 +1,6 @@
 import game from './game'
 import dom from './gui/dom'
+import { Piece } from './piece';
 
 export default {
 
@@ -7,7 +8,7 @@ export default {
         console.log(data);
         switch(data.action) {
             case 'move':
-                this.move(data.move.from, data.move.to)
+                this.move(data.move.from, data.move.to, data.move.selectPiece)
                 break;
             case 'start':
                 this.start(data.start_game.color)
@@ -41,7 +42,7 @@ export default {
     },
 
     // Ход противника
-    move(from, to) {
+    move(from, to, selectPiece) {
         game.board[from.v][from.h].go(to.h, to.v)
         game.canMove = true
 
@@ -55,6 +56,16 @@ export default {
                 }
             }
         }
+
+        // exception for change pawn
+        if (game.board[to.v][to.h].pieceName == 'pawn') {
+            if (selectPiece != '') {
+                if (to.v == 0 || to.v == 7) {
+                    game.board[to.v][to.h] = new Piece(selectPiece, to.h, to.v, game.color? 0 : 1)
+                }
+            }
+        }
+
     },
 
 }

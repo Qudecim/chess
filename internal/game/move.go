@@ -4,7 +4,7 @@ type Move struct {
 
 	From Position `json:"from"`
 	To Position `json:"to"`
-
+	SelectPiece string `json:"selectPiece"`
 }
 
 type PieceMove struct {

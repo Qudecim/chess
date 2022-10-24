@@ -27,8 +27,12 @@ export default {
         this.send('create_room', { 'join_room': {'room_name': name} })
     },
 
-    move(from, to, isCastling) {
-        this.send('move', {'move':{ from, to, isCastling }})
+    move(from, to, selectPiece) {
+        this.send('move', {'move':{ from, to, selectPiece }})
+    },
+
+    changePawn(pieceName) {
+        this.send('change_pawn', { '': {'name': pieceName} })
     },
 
     send(method, data) {

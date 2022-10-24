@@ -47,6 +47,17 @@ func (g *Game) Move(color int, move Move) bool {
 				}
 			}
 
+			// Exception when pawn change to another piece
+			if (g.board[move.To.V][move.To.H].getName() == "pawn") {
+				if (move.To.V == 0 || move.To.V == 7) {
+					if (move.SelectPiece != "") {
+						g.board[move.To.V][move.To.H] = NewPiece(color, move.SelectPiece)
+					} else {
+						return false
+					}
+				}
+			}
+
 			return true
 		}
 	}
