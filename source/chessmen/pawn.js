@@ -39,6 +39,39 @@ export class Pawn {
             }
         }
 
+        // Срубить в проход
+        if (game.board[game.lastMove.to.v][game.lastMove.to.h].pieceName == 'pawn') {
+
+            if (game.lastMove.to.v == 3 && game.lastMove.from.v == 1) {
+                if (color == 0) {
+                    if (v == 3) {
+                        if (h - 1 == game.lastMove.to.h) {
+                            steps.push({ v: 2, h: h - 1 })
+                        }
+                        if (h + 1 == game.lastMove.to.h) {
+                            steps.push({ v: 2, h: h + 1 })
+                        }
+                    }
+                }
+            }
+
+            if (game.lastMove.to.v == 4 && game.lastMove.from.v == 6) {
+                if (color == 1) {
+                    if (v == 4) {
+                        if (h - 1 == game.lastMove.to.h) {
+                            steps.push({ v: 5, h: h - 1 })
+                        }
+                        if (h + 1 == game.lastMove.to.h) {
+                            steps.push({ v: 5, h: h + 1 })
+                        }
+                    }
+                }
+
+            }
+        }
+
+
+
         return steps;
     }
 

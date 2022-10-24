@@ -10,7 +10,7 @@ type PieceKnight struct {
 	
 }
 
-func (p PieceKnight) GetSteps(board *[8][8]Piece, color int, v int, h int) []Position {
+func (p PieceKnight) GetSteps(board *[8][8]Piece, color int, v int, h int, lastMove *Move) []Position {
 
 	var positions []Position
 

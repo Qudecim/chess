@@ -44,11 +44,11 @@ func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once
 				}
 
 				if (board[nv][nh].isEmpty) {
-					positions = append(positions, Position{V:nv, H:nh})
+					positions = append(positions, newPosition(nv, nh))
 				} else {
 
 					if (board[nv][nh].color != color) {
-						positions = append(positions, Position{V:nv, H:nh})
+						positions = append(positions, newPosition(nv, nh))
 					}
 
 					pms[index].end = true
@@ -74,7 +74,7 @@ func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once
 					}
 				}
 				if (!havePiece) {
-					positions = append(positions, Position{V:v, H:h - 2})
+					positions = append(positions, newPosition(v, h - 2))
 				}
 			}
 
@@ -86,7 +86,7 @@ func getSteps(board *[8][8]Piece, color int, v int, h int, pms []PieceMove, once
 					}
 				}
 				if (!havePiece) {
-					positions = append(positions, Position{V:v, H:h + 2})
+					positions = append(positions, newPosition(v, h + 2))
 				}
 			}
 		}

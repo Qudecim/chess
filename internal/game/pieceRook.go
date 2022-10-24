@@ -7,7 +7,7 @@ type PieceRook struct {
 	
 }
 
-func (p PieceRook) GetSteps(board *[8][8]Piece, color int, v int, h int) []Position {
+func (p PieceRook) GetSteps(board *[8][8]Piece, color int, v int, h int, lastMove *Move) []Position {
 
 	var positions []Position
 

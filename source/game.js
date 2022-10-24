@@ -37,6 +37,10 @@ export default {
         h: 0,
         v: 0
     },
+    lastMove: {
+        from: {v:0, h:0},
+        to: {v:0, h:0}
+    },
 
 
 

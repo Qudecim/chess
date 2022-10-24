@@ -1,12 +1,17 @@
 package game
 
-import ("math")
+import (
+	"math"
+	"fmt"
+)
 
 type Game struct {
 
 	board [8][8]Piece
 
 	isWhiteMove bool
+
+	lastMove Move
 
 }
 
@@ -30,11 +35,24 @@ func NewGame() Game {
 
 func (g *Game) Move(color int, move Move) bool {
 
-	positions := g.board[move.From.V][move.From.H].GetSteps(&g.board, move.From.V, move.From.H)
+	positions := g.board[move.From.V][move.From.H].GetSteps(&g.board, move.From.V, move.From.H, &g.lastMove)
+	fmt.Println("Game.Move:")
+	fmt.Println(positions)
 
 	for _, position := range positions {
 		if (position.V == move.To.V && position.H == move.To.H) {
 			g.board[move.To.V][move.To.H].Go(&g.board, move.From.V, move.From.H, move.To.V, move.To.H)
+			g.lastMove = move
+			fmt.Println("Game.Move.Main:")
+			fmt.Println(position)
+
+			if (position.PawnPass) {
+				if (color == 0) {
+					g.board[move.To.V + 1][move.To.H] = NewPiece(0, "empty")
+				} else {
+					g.board[move.To.V - 1][move.To.H] = NewPiece(0, "empty")
+				}
+			}
 
 			// Exception for castling
 			if (g.board[move.To.V][move.To.H].getName() == "king") {
@@ -80,7 +98,7 @@ func (g *Game) isCheck(board *[8][8]Piece, color int) bool {
 		for h, piece := range line {
 			if (!piece.isEmpty) {
 				if (piece.color != color) {
-					positions := piece.GetSteps(board, v, h)
+					positions := piece.GetSteps(board, v, h, &g.lastMove)
 
 					for _,position := range positions {
 						if (position.H == kingPosition.H && position.V == kingPosition.V) {
@@ -108,7 +126,7 @@ func (g *Game) getCheckPiece(board *[8][8]Piece,color int) Position {
 		for h, piece := range line {
 			if (!piece.isEmpty) {
 				if (piece.color != color) {
-					positions := piece.GetSteps(board, v, h)
+					positions := piece.GetSteps(board, v, h, &g.lastMove)
 					for _,position := range positions {
 						if (position.H == kingPosition.H && position.V == kingPosition.V) {
 							return position
@@ -151,7 +169,7 @@ func (g *Game) IsMate(color int) bool {
 		for h, piece := range line {
 			if (!piece.isEmpty) {
 				if (piece.color == color) {
-					positions := piece.GetSteps(&g.board, v, h)
+					positions := piece.GetSteps(&g.board, v, h, &g.lastMove)
 					for _,position := range positions {
 						
 						tmp := board[position.V][position.H]

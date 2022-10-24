@@ -46,6 +46,8 @@ export default {
         game.board[from.v][from.h].go(to.h, to.v)
         game.canMove = true
 
+        game.lastMove = {from, to}
+
         // exception for castling
         if (game.board[to.v][to.h].pieceName == 'king') {
             if (Math.abs(to.h - from.h) > 1) {
