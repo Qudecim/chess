@@ -5,7 +5,8 @@ export default {
     conn: null,
 
     init() {
-        this.conn = new WebSocket("ws://localhost/ws");
+        let host = window.location.host;
+        this.conn = new WebSocket("ws://" + host + "/ws");
         this.conn.onclose = function (evt) {
             console.warn('Connection closed')
         }

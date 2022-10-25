@@ -21,6 +21,9 @@ func Init() {
     hub := newHub()
     go hub.run()
 
+    fs := http.FileServer(http.Dir("./../../public"))
+    http.Handle("/", fs)
+
     // отлавливаем через http, что мы хотим общаться сокетами
     http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		handler(hub, w, r)
