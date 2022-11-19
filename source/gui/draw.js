@@ -13,6 +13,7 @@ export default {
             tip: '#9cc0ce'
         }
     },
+    isPhone: false,
 
     /**
      * Инициализация
@@ -20,6 +21,10 @@ export default {
     init() {
         this.canvas = document.getElementById('canvas');
         this.ctx = this.canvas.getContext('2d');
+
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            this.isPhone = true
+        }
     },
 
     /**
@@ -88,9 +93,41 @@ export default {
         if (piece.active) {
             this.ctx.fillStyle = this.colors.board.active;
             this.ctx.fillRect(piece.h * boxSize, piece.v * boxSize, boxSize, boxSize);
-            this.ctx.drawImage(res.sprites.chessmen, 213 * piece.sprite(), 213 * piece.color, 213, 213, cursor.x - (game.block/2), cursor.y - (game.block/2), boxSize, boxSize);
+            if (this.isPhone) {
+                this.ctx.drawImage(
+                    res.sprites.chessmen,
+                    213 * piece.sprite(),
+                    213 * piece.color,
+                    213,
+                    213,
+                    piece.h * boxSize,
+                    piece.v * boxSize,
+                    boxSize,
+                    boxSize);
+            } else {
+                this.ctx.drawImage(
+                    res.sprites.chessmen,
+                    213 * piece.sprite(),
+                    213 * piece.color,
+                    213,
+                    213,
+                    cursor.x - (game.block/2),
+                    cursor.y - (game.block/2),
+                    boxSize,
+                    boxSize);
+            }
+
         } else {
-            this.ctx.drawImage(res.sprites.chessmen, 213 * piece.sprite(), 213 * piece.color, 213, 213, piece.h * boxSize, piece.v * boxSize, boxSize, boxSize);
+            this.ctx.drawImage(
+                res.sprites.chessmen,
+                213 * piece.sprite(),
+                213 * piece.color,
+                213,
+                213,
+                piece.h * boxSize,
+                piece.v * boxSize,
+                boxSize,
+                boxSize);
         }
     },
 

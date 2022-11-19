@@ -20,16 +20,49 @@ export default {
         document.getElementById('joinRoom').addEventListener('click', (event) => {
             room.join(document.getElementById('roomName').value)
         })
-        
-        draw.canvas.addEventListener("mousedown", (e) => {
-            this.down(e)
-        });
-        draw.canvas.addEventListener("mouseup", (e) => {
-            this.up(e)
-        });
-        draw.canvas.addEventListener("mousemove", (e) => {
-            this.move(e)
-        });
+
+        if (!game.isPhone) {
+            draw.canvas.addEventListener("mousedown", (e) => {
+                console.log('mousedown');
+                console.log(e);
+                this.down(e)
+            });
+            draw.canvas.addEventListener("mouseup", (e) => {
+                console.log('mouseup');
+                this.up(e)
+            });
+            draw.canvas.addEventListener("mousemove", (e) => {
+                console.log('mousemove');
+                this.move(e)
+            });
+        } else {
+            draw.canvas.addEventListener("touchstart", (e) => {
+                console.log('touchstart');
+                console.log(e);
+                let position = e.target.getBoundingClientRect()
+                let customEvent = {
+                    offsetX: e.touches[0].clientX - position.x,
+                    offsetY: e.touches[0].clientY - position.y,
+                }
+                this.down(customEvent)
+            });
+            draw.canvas.addEventListener("touchend", (e) => {
+                let customEvent = {
+                    offsetX: e.changedTouches[0].clientX,
+                    offsetY: e.changedTouches[0].clientY,
+                }
+                //this.touched(customEvent)
+            });
+            draw.canvas.addEventListener("touchmove", (e) => {
+                console.log('touchmove');
+                let position = e.target.getBoundingClientRect()
+                let customEvent = {
+                    offsetX: e.touches[0].clientX - position.x,
+                    offsetY: e.touches[0].clientY - position.y,
+                }
+                this.move(customEvent)
+            });
+        }
 
         document.getElementById('choose_queen').addEventListener('click', (event) => {
             dom.choosePiece('queen')
@@ -57,8 +90,13 @@ export default {
         let y = Math.floor(e.offsetY / game.block)
         this.cursor.ox = (x * game.block) - e.offsetX;
         this.cursor.oy = (y * game.block) - e.offsetY;
+        console.log({x:e.offsetX,y:e.offsetY});
+        if (!game.isPhone) {
+            game.select(y,x)
+        } else {
+            game.selectPhone(y, x)
+        }
 
-        game.select(y,x)
     },
     up(e) {
         let x = Math.floor(e.offsetX / game.block)

@@ -41,6 +41,7 @@ export default {
         from: {v:0, h:0},
         to: {v:0, h:0}
     },
+    isPhone: false,
 
 
 
@@ -50,6 +51,11 @@ export default {
      * Стартуем таймер для отрисовки
      */
     init() {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            this.isPhone = true
+        }
+        console.log({isPhone:this.isPhone})
+
         for (let v = 0; v < 8; v++) {
             for (let h = 0; h < 8; h++) {
                 if (this.start_positions[v][h] !== null) {
@@ -92,6 +98,22 @@ export default {
             this.tips = this.board[v][h].getSteps(isCheck)
             this.active = { v, h }
             dom.cursor('grabbing')
+        }
+    },
+
+    selectPhone(v,h) {
+        if (!this.canMove) {return}
+        if (this.board[v][h] !== null) {
+            if (this.board[v][h].color === this.color) {
+                this.board[v][h].setActive()
+                let isCheck = this.isCheck(this.color)
+                this.tips = this.board[v][h].getSteps(isCheck)
+                this.active = { v, h }
+            } else {
+                this.move(v,h)
+            }
+        } else {
+            this.move(v,h)
         }
     },
 
