@@ -25,17 +25,16 @@ export default {
 
     resize() {
 
-        let w = Math.min(window.innerWidth, window.innerHeight) * 0.75;
-
+        if (window.innerWidth > 500 && window.innerHeight > 500) {
+            let w = Math.min(window.innerWidth, window.innerHeight) * 0.75;
+        } else {
+            let w = Math.min(window.innerWidth, window.innerHeight);
+        }
+        
         draw.canvas.width = w
         draw.canvas.height = w
 
-        if (w > 600) {
-            game.block = w / 8
-        } else {
-            game.block = w
-        }
-
+        game.block = w / 8
     },
 
     showChoose(show) {
