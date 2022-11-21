@@ -30,7 +30,12 @@ export default {
         draw.canvas.width = w
         draw.canvas.height = w
 
-        game.block = w / 8
+        if (w > 600) {
+            game.block = w / 8
+        } else {
+            game.block = w
+        }
+
     },
 
     showChoose(show) {
