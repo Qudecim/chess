@@ -25,12 +25,8 @@ export default {
 
     resize() {
 
-        if (window.innerWidth > 500 && window.innerHeight > 500) {
-            let w = Math.min(window.innerWidth, window.innerHeight) * 0.75;
-        } else {
-            let w = Math.min(window.innerWidth, window.innerHeight);
-        }
-        
+        let w = Math.min(window.innerWidth, window.innerHeight) * 0.75;
+
         draw.canvas.width = w
         draw.canvas.height = w
 
