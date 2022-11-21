@@ -7,7 +7,7 @@ import (
     "github.com/gorilla/websocket"
 )
 
-var addr = flag.String("addr", ":80", "http service address")
+var addr = flag.String("addr", ":3001", "http service address")
 
 // Размер буфера для записи и чтения
 var upgrader = websocket.Upgrader{

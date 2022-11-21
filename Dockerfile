@@ -17,5 +17,5 @@ RUN CGO_ENABLED=0 go build -o myapp
 FROM alpine
 WORKDIR /
 COPY --from=builder /build/cmd/app/myapp .
-EXPOSE 80
+EXPOSE 3001
 CMD ["./myapp"]
