@@ -50,7 +50,8 @@ func run(message []byte, c *Client) {
 	switch string(request.Action) {
 		// Создание комнаты
 		case "create_room":
-		    if (c.hub.rooms.containsKey(request.CreateRoom.Room_name)) { // Нужно отправить что имя занято
+		     _, ok := c.hub.rooms[request.CreateRoom.Room_name];
+		     if (!ok) { // Нужно отправить что имя занято
 			    room := newRoom([]byte(request.CreateRoom.Room_name), c)
                 c.hub.rooms[request.CreateRoom.Room_name] = room
                 c.room = room
@@ -58,7 +59,8 @@ func run(message []byte, c *Client) {
 
 		// Присоедениться к комнате
 		case "join_room":
-		    if (c.hub.rooms.containsKey(request.CreateRoom.Room_name)) { // Нужно отправить что нет комнаты такой
+		    _, ok := c.hub.rooms[request.CreateRoom.Room_name];
+		    if (ok) { // Нужно отправить что нет комнаты такой
 		        c.hub.rooms[request.JoinRoom.Room_name].black = c
                 c.room = c.hub.rooms[request.JoinRoom.Room_name]
                 c.room.Start()
