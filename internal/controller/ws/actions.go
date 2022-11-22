@@ -60,7 +60,7 @@ func run(message []byte, c *Client) {
 		// Присоедениться к комнате
 		case "join_room":
 		    _, ok := c.hub.rooms[request.CreateRoom.Room_name];
-		    if (ok) { // Нужно отправить что нет комнаты такой
+		    if (ok && !c.hub.rooms[request.CreateRoom.Room_name].isStart) { // Нужно отправить что нет комнаты такой
 		        c.hub.rooms[request.JoinRoom.Room_name].black = c
                 c.room = c.hub.rooms[request.JoinRoom.Room_name]
                 c.room.Start()

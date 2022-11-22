@@ -96,6 +96,9 @@ func (c *Client) read() {
 	// При завершении функции убиваем коннект
 	defer func() {
 		c.hub.unregister <- c
+		if (c.room != nil) {
+		    c.room.End()
+		}
 		c.conn.Close()
 	}()
 

@@ -17,6 +17,8 @@ type Room struct {
 
 	canMove int
 
+	isStart bool
+
 }
 
 
@@ -29,6 +31,7 @@ func newRoom(name []byte, c *Client) *Room {
 		white:c,
 		game: &g,
 		canMove: 0,
+		isStart: false,
 	}
 }
 
@@ -43,6 +46,14 @@ func (r *Room) Start() {
 	data_black := Response{Action:"start", StartGame:startGameBlack}
 	json_black, _ := json.Marshal(data_black)
 	r.black.send <- json_black
+
+	r.isStart = true
+
+}
+
+func (r *Room) End() {
+
+    delete(r.white.hub.rooms, string(r.name));
 
 }
 
